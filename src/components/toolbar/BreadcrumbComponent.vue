@@ -11,7 +11,7 @@ const items = ref([
 </script>
 
 <template>
-  <p-breadcrumb :home="home" :model="items" style="border: none;">
+  <Breadcrumb :home="home" :model="items" style="border: none;">
     <template #item="{ item, props }">
       <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
         <a :href="href" v-bind="props.action" @click="navigate">
@@ -23,7 +23,7 @@ const items = ref([
         <span class="text-color">{{ item.label }}</span>
       </a>
     </template>
-  </p-breadcrumb>
+  </Breadcrumb>
 </template>
 
 <style scoped>

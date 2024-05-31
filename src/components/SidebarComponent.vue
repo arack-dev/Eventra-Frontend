@@ -1,21 +1,23 @@
 <script setup lang="ts">
 import {useSidebarStore} from "@/stores/sidebar";
+import SignInComponent from "@/components/auth/SignInComponent.vue";
+import SignUpComponent from "@/components/auth/SignUpComponent.vue";
 
 const store = useSidebarStore();
 
 </script>
 
 <template>
-  <div class="sidebar flex flex-column justify-content-between" v-if="store.visible">
-    <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
-        <span class="inline-flex align-items-center gap-2">
-          <span class="font-semibold text-2xl text-primary">Eventra</span>
+  <div class="sidebar flex flex-column justify-content-between gap-2 p-3" v-if="store.visible">
+    <div class="flex align-items-center justify-content-between flex-shrink-0">
+        <span class="inline-flex align-items-center">
+          <Avatar image="src/assets/logo_eventra.png" shape="circle" size="xlarge" />
+          <span class="font-semibold text-5xl " style="font-size: 2.5rem; color: var(--color-main);">ventra</span>
         </span>
-      <p-button type="button" icon="pi pi-times" rounded outlined class="h-2rem w-2rem"/>
     </div>
 
     <div class="overflow-y-auto flex flex-column">
-      <div class="list-none p-3 m-0 overflow-hidden">
+      <div class="list-none m-0 overflow-hidden">
         <a class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
           <i class="pi pi-home mr-2"></i>
           <span class="font-medium">Dashboard</span>
@@ -23,10 +25,6 @@ const store = useSidebarStore();
         <a class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
           <i class="pi pi-bookmark mr-2"></i>
           <span class="font-medium">Bookmarks</span>
-        </a>
-        <a class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-          <i class="pi pi-users mr-2"></i>
-          <span class="font-medium">Team</span>
         </a>
         <a class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
           <i class="pi pi-comments mr-2"></i>
@@ -39,7 +37,7 @@ const store = useSidebarStore();
         </a>
       </div>
 
-      <div class="list-none p-3 m-0 overflow-hidden">
+      <div class="list-none overflow-hidden">
         <a class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
           <i class="pi pi-chart-line mr-2"></i>
           <span class="font-medium">Dashboard</span>
@@ -52,14 +50,22 @@ const store = useSidebarStore();
     </div>
 
     <div class="mt-auto">
+      <h3>Suscribirse o iniciar sesión</h3>
+      <p>Consigue respuestas más inteligentes, carga archivos e imágenes y mucho más.</p>
+      <hr class="my-3 mx-3 border-top-1 border-none surface-border" />
+      <SignUpComponent/>
+      <hr class="mb-1 mx-3 border-top-1 border-none surface-border" />
+
+      <SignInComponent/>
+    </div>
+    <div class="mt-auto" v-if="false">
       <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
-      <a class="m-3 flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-        <p-avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle"/>
+      <a class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+        <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle"/>
         <span class="font-bold">Amy Elsner</span>
       </a>
     </div>
   </div>
-
 </template>
 
 <style scoped>
@@ -67,5 +73,11 @@ const store = useSidebarStore();
   width: 20rem;
   height: 100vh;
   background-color: var(--surface-card);
+  z-index: 100;
+}
+@media screen and (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+  }
 }
 </style>

@@ -1,15 +1,27 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
+import { HttpService } from "@/service/http.service";
+import axios from 'axios';
+const projects = ref([]);
+const source = axios.CancelToken.source();
+
+onMounted(async () => {
+  try {
+    projects.value = await HttpService.get('projects', source)
+  } catch (error) {
+    console.error('Error en la solicitud:', error);
+  }
+});
 
 const products = ref([
   {
     id: '1',
     code: 'f230fh0g3',
-    name: 'Bamboo Watch',
+    name: 'Concierto de Rock',
     description: 'Product Description',
     image: 'bamboo-watch.jpg',
     price: 65,
-    category: 'Accessories',
+    category: 'Deportes',
     quantity: 24,
     inventoryStatus: 'INSTOCK',
     rating: 5
@@ -120,10 +132,10 @@ const getSeverity = (product: any) => {
 
 <template>
   <section class="my-events">
-    <p-data-view :value="products" :layout="layout" paginator :rows="5">
+    <DataView :value="products" :layout="layout" paginator :rows="8">
       <template #header>
         <div class="flex justify-content-end">
-          <p-data-view-layout-options v-model="layout" />
+          <DataViewLayoutOptions v-model="layout" />
         </div>
       </template>
 
@@ -152,7 +164,7 @@ const getSeverity = (product: any) => {
                   <span class="text-xl font-semibold text-900">${{ item.price }}</span>
                   <div class="flex flex-row-reverse md:flex-row gap-2">
                     <p-button icon="pi pi-heart" outlined></p-button>
-                    <p-button icon="pi pi-shopping-cart" label="Buy Now" :disabled="item.inventoryStatus === 'OUTOFSTOCK'" class="flex-auto md:flex-initial white-space-nowrap"></p-button>
+                    <p-button icon="pi pi-shopping-cart" label="Get Ticket" :disabled="item.inventoryStatus === 'OUTOFSTOCK'" class="flex-auto md:flex-initial white-space-nowrap"></p-button>
                   </div>
                 </div>
               </div>
@@ -163,12 +175,12 @@ const getSeverity = (product: any) => {
 
       <template #grid="slotProps">
         <div class="grid grid-nogutter">
-          <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 sm:col-6 md:col-4 xl:col-6 p-2">
+          <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 sm:col-6 md:col-6 xl:col-3 p-2">
             <div class="p-4 border-1 surface-border surface-card border-round flex flex-column">
               <div class="surface-50 flex justify-content-center border-round p-3">
                 <div class="relative mx-auto">
                   <img class="border-round w-full" :src="`https://primefaces.org/cdn/primevue/images/product/${item.image}`" :alt="item.name" style="max-width: 300px"/>
-                  <p-tag :value="item.inventoryStatus" :severity="getSeverity(item)" class="absolute" style="left: 4px; top: 4px"></p-tag>
+                  <Tag :value="item.inventoryStatus" :severity="getSeverity(item)" class="absolute" style="left: 4px; top: 4px"></Tag>
                 </div>
               </div>
               <div class="pt-4">
@@ -187,8 +199,8 @@ const getSeverity = (product: any) => {
                 <div class="flex flex-column gap-4 mt-4">
                   <span class="text-2xl font-semibold text-900">${{ item.price }}</span>
                   <div class="flex gap-2">
-                    <p-button icon="pi pi-shopping-cart" label="Buy Now" :disabled="item.inventoryStatus === 'OUTOFSTOCK'" class="flex-auto white-space-nowrap"></p-button>
-                    <p-button icon="pi pi-heart" outlined></p-button>
+                    <Button icon="pi pi-shopping-cart" label="Get Ticket" style="background: var(--color-main);" :disabled="item.inventoryStatus === 'OUTOFSTOCK'" class="flex-auto white-space-nowrap"></Button>
+                    <Button icon="pi pi-heart" outlined></Button>
                   </div>
                 </div>
               </div>
@@ -196,10 +208,11 @@ const getSeverity = (product: any) => {
           </div>
         </div>
       </template>
-    </p-data-view>
+    </DataView>
   </section>
 </template>
 
 <style scoped>
+
 </style>
 

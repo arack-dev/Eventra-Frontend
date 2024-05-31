@@ -26,6 +26,17 @@ main {
     }
 }
 
+.bg-filter {
+    background-color: var(--color-main-soft);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    width: 100%;
+    padding: 2rem;
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 100;
+}
+
 .p-sidebar {
     transform: none;
     position: relative;

@@ -33,7 +33,6 @@
     --color-text-mute: var(--dark-mute);
 
     --color-card: white;
-    --space: 2rem;
   }
 }
 
@@ -48,5 +47,16 @@
     --color-text-mute: var(--light-mute);
 
     --color-card: black;
+  }
+}
+
+@media screen {
+  :root {
+    --space: 1.5rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  :root {
+    --space: 0.75rem;
   }
 }

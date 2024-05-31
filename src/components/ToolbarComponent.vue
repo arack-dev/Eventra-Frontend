@@ -20,19 +20,19 @@ const search = (event) => {
 </script>
 
 <template>
-  <p-toolbar>
+  <Toolbar>
     <template #start>
-      <p-button icon="pi pi-bars" @click="toggleSidebar" />
+      <Button icon="pi pi-bars" @click="toggleSidebar" style="background: var(--color-main);" />
       <BreadcrumbComponent />
     </template>
 
     <template #end>
-      <p-input-group class="mr-2">
-        <p-auto-complete v-model="value" :suggestions="items" @complete="search" />
-        <p-button icon="pi pi-search" severity="warning" />
-      </p-input-group>
+      <InputGroup class="mr-2">
+        <AutoComplete v-model="value" :suggestions="items" @complete="search" />
+        <Button icon="pi pi-search" severity="warning" />
+      </InputGroup>
     </template>
-  </p-toolbar>
+  </Toolbar>
 </template>
 
 <style scoped>
