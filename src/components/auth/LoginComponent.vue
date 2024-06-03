@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import SignUpComponent from "@/components/auth/SignUpComponent.vue";
+import {onMounted, ref} from "vue";
+import {useAuthStore} from "@/stores/auth";
 
-const visible = ref(false);
-const name = ref();
-const email = ref();
+const visible = ref(true);
+const email = ref("");
+const password = ref("");
 const accept = ref(false);
-const value = ref(null);
 
-function goToSignUp() {
-  visible.value = !visible.value;
-}
+onMounted(() => {
+  const auth = useAuthStore();
+  if (auth.registered) {
+    email.value = auth.email
+    password.value = auth.password
+  }
+});
+
+const login = async () => {
+};
 </script>
 
 <template>
   <div class="card flex justify-content-center">
-    <Button label="Iniciar Sesion" outlined @click="visible = true" style="width: 100%;" />
-
     <Dialog
         v-model:visible="visible"
         modal
@@ -27,10 +31,15 @@ function goToSignUp() {
                 }
             }"
     >
-      <template #container="{ closeCallback }">
+      <template #container>
         <div class="sign flex gap-1">
           <div class="image start">
-            <Button @click="goToSignUp" type="button" icon="pi pi-times" rounded class="btn-close-sign-in"/>
+            <router-link to="/">
+              <Button type="button" icon="pi pi-times" rounded class="btn-close-sign-in"/>
+            </router-link>
+            <router-link to="/auth/register">
+              <span class="to">Aun no tienes una cuenta? <span class="redirect">Registrate aqui!</span></span>
+            </router-link>
           </div>
           <div class="card end flex flex-column justify-content-center gap-4 p-fluid">
 
@@ -46,7 +55,7 @@ function goToSignUp() {
 
               <InputGroup>
                 <InputGroupAddon class="bg-white-alpha-20 border-none text-primary-50"><i class="pi pi-lock"></i></InputGroupAddon>
-                <Password v-model="value" placeholder="Password" toggleMask class="" >
+                <Password v-model="password" placeholder="Password" toggleMask class="" >
                   <template #header>
                     <h6>Pick a password</h6>
                   </template>
@@ -67,7 +76,7 @@ function goToSignUp() {
                 <Checkbox id="accept" v-model="accept" name="accept" value="Accept" />
                 <label for="accept" style="font-size: .8rem; color: var(--light-soft);">Mantener la sesion iniciada</label>
               </div>
-              <Button type="submit" label="Iniciar Sesion" />
+              <Button @click="login" type="submit" label="Iniciar Sesion" />
             </div>
 
             <div class="footer pt-3">
@@ -83,6 +92,11 @@ function goToSignUp() {
 <style scoped>
 .btn-close-sign-in {
   float: left;
+}
+.image {
+  .to {
+    float: left;
+  }
 }
 @keyframes slideIn {
 

@@ -36,6 +36,15 @@ main {
     overflow: hidden;
     z-index: 100;
 }
+.btn-primary {
+    background: var(--color-main);
+    border-color: var(--color-main);
+    color: white;
+}
+.btn-outlined {
+    border-color: var(--color-main);
+    color: var(--color-main);
+}
 
 .p-sidebar {
     transform: none;

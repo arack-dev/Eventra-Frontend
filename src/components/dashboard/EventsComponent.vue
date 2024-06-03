@@ -1,117 +1,19 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
-import { HttpService } from "@/service/http.service";
-import axios from 'axios';
-const projects = ref([]);
-const source = axios.CancelToken.source();
+import type {EventModel} from "@/models/EventModel";
+import EventService from "@/services/EventService";
+
+const layout = ref('grid');
+const events = ref<EventModel[]>([]);
 
 onMounted(async () => {
   try {
-    projects.value = await HttpService.get('projects', source)
+    const response = await EventService.getAll();
+    events.value = response.data;
   } catch (error) {
-    console.error('Error en la solicitud:', error);
+    console.log('Failed to fetch events:', error);
   }
-});
-
-const products = ref([
-  {
-    id: '1',
-    code: 'f230fh0g3',
-    name: 'Concierto de Rock',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Deportes',
-    quantity: 24,
-    inventoryStatus: 'INSTOCK',
-    rating: 5
-  },
-  {
-    id: '2',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'OUTOFSTOCK',
-    rating: 5
-  },
-  {
-    id: '3',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'INSTOCK',
-    rating: 5
-  },
-  {
-    id: '4',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'OUTOFSTOCK',
-    rating: 5
-  },
-  {
-    id: '1',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'INSTOCK',
-    rating: 5
-  },
-  {
-    id: '2',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'INSTOCK',
-    rating: 5
-  },
-  {
-    id: '3',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'LOWSTOCK',
-    rating: 5
-  },
-  {
-    id: '4',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'LOWSTOCK',
-    rating: 5
-  }
-]);
-const layout = ref('grid');
+})
 
 const getSeverity = (product: any) => {
   switch (product.inventoryStatus) {
@@ -132,7 +34,7 @@ const getSeverity = (product: any) => {
 
 <template>
   <section class="my-events">
-    <DataView :value="products" :layout="layout" paginator :rows="8">
+    <DataView :value="events" :layout="layout" paginator :rows="8">
       <template #header>
         <div class="flex justify-content-end">
           <DataViewLayoutOptions v-model="layout" />
@@ -145,26 +47,26 @@ const getSeverity = (product: any) => {
             <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3" :class="{ 'border-top-1 surface-border': index !== 0 }">
               <div class="md:w-10rem relative">
                 <img class="block xl:block mx-auto border-round w-full" :src="`https://primefaces.org/cdn/primevue/images/product/${item.image}`" :alt="item.name" />
-                <p-tag :value="item.inventoryStatus" :severity="getSeverity(item)" class="absolute" style="left: 4px; top: 4px"></p-tag>
+                <Tag :value="item.inventoryStatus" :severity="getSeverity(item)" class="absolute" style="left: 4px; top: 4px"></Tag>
               </div>
               <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
                 <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
                   <div>
-                    <span class="font-medium text-secondary text-sm">{{ item.category }}</span>
-                    <div class="text-lg font-medium text-900 mt-2">{{ item.name }}</div>
+                    <span class="font-medium text-secondary text-sm">{{ item.categoryEvent.name }}</span>
+                    <div class="text-lg font-medium text-900 mt-2">{{ item.title }}</div>
                   </div>
                   <div class="surface-100 p-1" style="border-radius: 30px">
-                    <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0px rgba(0, 0, 0, 0.06)">
-                      <span class="text-900 font-medium text-sm">{{ item.rating }}</span>
+                    <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06)">
+                      <span class="text-900 font-medium text-sm">{{ item.id }}</span>
                       <i class="pi pi-star-fill text-yellow-500"></i>
                     </div>
                   </div>
                 </div>
                 <div class="flex flex-column md:align-items-end gap-5">
-                  <span class="text-xl font-semibold text-900">${{ item.price }}</span>
+                  <span class="text-xl font-semibold text-900">${{ item.location }}</span>
                   <div class="flex flex-row-reverse md:flex-row gap-2">
-                    <p-button icon="pi pi-heart" outlined></p-button>
-                    <p-button icon="pi pi-shopping-cart" label="Get Ticket" :disabled="item.inventoryStatus === 'OUTOFSTOCK'" class="flex-auto md:flex-initial white-space-nowrap"></p-button>
+                    <Button icon="pi pi-heart" outlined></Button>
+                    <Button icon="pi pi-shopping-cart" label="Get Ticket" :disabled="item.inventoryStatus === 'OUTOFSTOCK'" class="flex-auto md:flex-initial white-space-nowrap"></Button>
                   </div>
                 </div>
               </div>
@@ -186,11 +88,11 @@ const getSeverity = (product: any) => {
               <div class="pt-4">
                 <div class="flex flex-row justify-content-between align-items-start gap-2">
                   <div>
-                    <span class="font-medium text-secondary text-sm">{{ item.category }}</span>
-                    <div class="text-lg font-medium text-900 mt-1">{{ item.name }}</div>
+                    <span class="font-medium text-secondary text-sm">{{ item.categoryEvent.name }}</span>
+                    <div class="text-lg font-medium text-900 mt-1">{{ item.title }}</div>
                   </div>
                   <div class="surface-100 p-1" style="border-radius: 30px">
-                    <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
+                    <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06)">
                       <span class="text-900 font-medium text-sm">{{ item.rating }}</span>
                       <i class="pi pi-star-fill text-yellow-500"></i>
                     </div>

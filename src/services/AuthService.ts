@@ -1,6 +1,5 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import {BaseService} from "@/services/BaseService";
-import type {UserModel} from "@/models/UserModel";
 
 class AuthService extends BaseService<any> {
     constructor() {
@@ -30,8 +29,8 @@ class AuthService extends BaseService<any> {
             (response) => response,
             async (error: AxiosError) => {
                 if (error.response && error.response.status === 401) {
-                    // Aquí puedes implementar la lógica para renovar el token si expiró
-                    // Por ejemplo, puedes llamar a un método para renovar el token y reintentar la solicitud original.
+                    // Lógica para renovar el token si expiró
+                    // Por ejemplo, método para renovar el token y reintentar la solicitud original.
                     // this.refreshTokenAndRetry(error);
                 }
                 return Promise.reject(error);

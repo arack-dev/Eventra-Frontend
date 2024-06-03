@@ -6,3 +6,5 @@ class CategoryService extends BaseService<CategoryModel>{
         super('/categoryevent');
     }
 }
+
+export default new CategoryService();

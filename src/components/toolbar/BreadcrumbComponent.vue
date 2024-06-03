@@ -6,7 +6,7 @@ const home = ref({
   route: '/'
 });
 const items = ref([
-  { label: 'Mis Eventos', route: '/events' }
+  { label: 'Dashboard', route: '/' }
 ]);
 </script>
 
