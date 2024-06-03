@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import {useSidebarStore} from "@/stores/sidebar";
-import BreadcrumbComponent from "@/components/toolbar/BreadcrumbComponent.vue";
+import BreadcrumbComponent from "@/app/shared/components/BreadcrumbComponent.vue";
 
 const store = useSidebarStore();
 

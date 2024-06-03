@@ -1,4 +1,4 @@
-import type {RoleModel} from "@/models/RoleModel";
+import type {RoleModel} from "@/app/user/models/RoleModel";
 
 export interface UserModel {
     userId: number;

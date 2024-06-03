@@ -1,5 +1,5 @@
-import { BaseService } from './BaseService';
-import type {EventModel} from "@/models/EventModel";
+import { BaseService } from '@/app/shared/services/BaseService';
+import type {EventModel} from "@/app/events/models/EventModel";
 
 class EventService extends BaseService<EventModel> {
     constructor() {

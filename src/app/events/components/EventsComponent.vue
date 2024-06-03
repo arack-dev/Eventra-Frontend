@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
-import type {EventModel} from "@/models/EventModel";
-import EventService from "@/services/EventService";
+import type {EventModel} from "@/app/events/models/EventModel";
+import EventService from "@/app/events/services/EventService";
 
 const layout = ref('grid');
 const events = ref<EventModel[]>([]);

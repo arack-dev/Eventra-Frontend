@@ -1,5 +1,5 @@
-import type {UserModel} from "@/models/UserModel";
-import type {CategoryModel} from "@/models/CategoryModel";
+import type {UserModel} from "@/app/user/models/UserModel";
+import type {CategoryModel} from "@/app/events/models/CategoryModel";
 
 export interface EventModel {
     id: number;

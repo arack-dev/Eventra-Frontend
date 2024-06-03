@@ -1,5 +1,5 @@
-import {BaseService} from "@/services/BaseService";
-import type {CategoryModel} from "@/models/CategoryModel";
+import {BaseService} from "@/app/shared/services/BaseService";
+import type {CategoryModel} from "@/app/events/models/CategoryModel";
 
 class CategoryService extends BaseService<CategoryModel>{
     constructor() {

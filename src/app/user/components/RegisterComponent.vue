@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import AuthService from "@/services/AuthService";
+import AuthService from "@/app/user/services/AuthService";
 import {useRouter} from "vue-router";
 import {useAuthStore} from "@/stores/auth";
 
@@ -10,6 +10,9 @@ const lastname = ref("");
 const email = ref("");
 const password = ref("");
 const accept = ref(false);
+const value = ref('Entusiasta');
+const options = ref(['Entusiasta', 'Organizador']);
+const active = ref(false);
 const router = useRouter();
 const authStore = useAuthStore();
 
@@ -52,8 +55,10 @@ const register = async () => {
           <div class="card flex flex-column justify-content-center gap-4 p-fluid">
 
             <div class="header flex justify-content-between align-items-center">
-              <h1 style="font-weight: bold;">Crear cuenta..</h1>
+              <h1  style="font-weight: bold;">Crear cuenta..</h1>
             </div>
+
+            <SelectButton style="height: 2rem;"  v-model="value" :options="options" />
 
             <div v-focustrap class="w-full flex flex-column gap-3">
               <InputGroup>
@@ -91,15 +96,16 @@ const register = async () => {
               </InputGroup>
 
               <div class="field-checkbox">
-                <Checkbox id="accept" v-model="accept" name="accept" value="Accept" />
+                <Checkbox id="accept" v-model="accept" name="accept" value="Accept" @click="active = !active" />
                 <label for="accept" style="font-size: .7rem; color: var(--light-soft);">Estoy de acuerdo con los términos y condiciones.</label>
               </div>
-              <Button type="submit" label="Registrar" @click="register" />
+
+              <Button style="background: black;" type="submit" label="Registrar" :disabled="!active" @click="register" />
             </div>
           </div>
           <div class="image">
             <router-link to="/">
-              <Button @click="closeCallback" type="button" icon="pi pi-times" rounded class="btn-close"/>
+              <Button @click="closeCallback" type="button" icon="pi pi-times" rounded class="btn-close-register"/>
             </router-link>
             <router-link to="/auth/login">
               <span class="to">Ya tienes una cuenta? <span class="redirect">Inicia aqui!</span></span>
@@ -121,9 +127,9 @@ const register = async () => {
     align-content: space-between;
     width: 22rem;
     padding: 1.5rem;
-    background: url("@/assets/eventra.png") center;
+    background: url("@/assets/img/eventra.png") center;
     background-size: cover;
-    .btn-close {
+    .btn-close-register {
       float: right;
     }
     .to {
@@ -144,12 +150,17 @@ const register = async () => {
     h1 {
       color: var(--light-soft);
     }
+
+    .p-button {
+      background: rgba(255, 255, 255, 0.2) !important;
+      border-style: none;
+    }
   }
 }
+
 .p-password-input {
   background: rgba(255, 255, 255, 0.2) !important;
   color: var(--primary-50) !important;
-  border-width: 0 !important;
   border-style: none;
   box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(18, 18, 23, 0.05);
 }

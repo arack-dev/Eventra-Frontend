@@ -1,5 +1,5 @@
-import type {UserModel} from "@/models/UserModel";
-import type {TicketModel} from "@/models/TicketModel";
+import type {UserModel} from "@/app/user/models/UserModel";
+import type {TicketModel} from "@/app/ticket/models/TicketModel";
 
 export interface BookingModel {
     reservationId: number;

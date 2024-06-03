@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import {BaseService} from "@/services/BaseService";
+import {BaseService} from "@/app/shared/services/BaseService";
 
 class AuthService extends BaseService<any> {
     constructor() {

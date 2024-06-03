@@ -45,6 +45,9 @@ main {
     border-color: var(--color-main);
     color: var(--color-main);
 }
+.c-orange {
+    color: var(--color-orange);
+}
 
 .p-sidebar {
     transform: none;

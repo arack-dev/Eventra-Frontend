@@ -1,5 +1,5 @@
-import {BaseService} from "@/services/BaseService";
-import type {TicketModel} from "@/models/TicketModel";
+import {BaseService} from "@/app/shared/services/BaseService";
+import type {TicketModel} from "@/app/ticket/models/TicketModel";
 
 class TicketService extends BaseService<TicketModel>{
     constructor() {

@@ -1,5 +1,5 @@
-import {BaseService} from "@/services/BaseService";
-import type {RoleModel} from "@/models/RoleModel";
+import {BaseService} from "@/app/shared/services/BaseService";
+import type {RoleModel} from "@/app/user/models/RoleModel";
 
 class RoleService extends BaseService<RoleModel>{
     constructor() {

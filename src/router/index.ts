@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DashboardView from '../views/DashboardView.vue'
+import DashboardView from '@/app/events/views/DashboardView.vue'
 
-const router = createRouter({
+const index = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -12,14 +12,14 @@ const router = createRouter({
     {
       path: '/auth/register',
       name: 'register',
-      component: () => import('../components/auth/RegisterComponent.vue')
+      component: () => import('@/app/user/components/RegisterComponent.vue')
     },
     {
       path: '/auth/login',
       name: 'login',
-      component: () => import('../components/auth/LoginComponent.vue')
+      component: () => import('@/app/user/components/LoginComponent.vue')
     }
   ]
 })
 
-export default router
+export default index

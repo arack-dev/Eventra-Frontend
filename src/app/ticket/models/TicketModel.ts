@@ -1,4 +1,4 @@
-import type {EventModel} from "@/models/EventModel";
+import type {EventModel} from "@/app/events/models/EventModel";
 
 export interface TicketModel {
     ticketId: number;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ToolbarComponent from "@/components/toolbar/ToolbarComponent.vue";
-import EventsComponent from "@/components/dashboard/EventsComponent.vue";
+import ToolbarComponent from "@/app/shared/components/ToolbarComponent.vue";
+import EventsComponent from "@/app/events/components/EventsComponent.vue";
 
 </script>
 
