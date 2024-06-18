@@ -1,10 +1,10 @@
-import {BaseService} from "@/app/shared/services/BaseService";
-import type {RoleModel} from "@/app/user/models/RoleModel";
+import { ApiBaseService } from '@/app/shared/services/ApiBaseService'
+import type { RoleModel } from '@/app/user/models/RoleModel'
 
-class RoleService extends BaseService<RoleModel>{
-    constructor() {
-        super('/typeofuser');
-    }
+class RoleService extends ApiBaseService<RoleModel> {
+  constructor() {
+    super('/typeofuser')
+  }
 }
 
-export default new RoleService();
+export default new RoleService()

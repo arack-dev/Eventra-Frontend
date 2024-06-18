@@ -6,7 +6,7 @@ const index = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'dashboard',
       component: DashboardView
     },
     {

@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue'
 
 const home = ref({
   label: 'Eventra',
   route: '/'
-});
-const items = ref([
-  { label: 'Dashboard', route: '/' }
-]);
+})
+const items = ref([{ label: 'Dashboard', route: '/' }])
 </script>
 
 <template>
-  <Breadcrumb :home="home" :model="items" style="border: none;">
+  <Breadcrumb :home="home" :model="items" style="border: none">
     <template #item="{ item, props }">
       <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
         <a :href="href" v-bind="props.action" @click="navigate">
@@ -26,6 +24,4 @@ const items = ref([
   </Breadcrumb>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,10 +1,10 @@
-import { BaseService } from '@/app/shared/services/BaseService';
-import type {EventModel} from "@/app/events/models/EventModel";
+import { ApiBaseService } from '@/app/shared/services/ApiBaseService'
+import type { EventModel } from '@/app/events/models/EventModel'
 
-class EventService extends BaseService<EventModel> {
-    constructor() {
-        super('/events');
-    }
+class EventService extends ApiBaseService<EventModel> {
+  constructor() {
+    super('/events')
+  }
 }
 
-export default new EventService();
+export default new EventService()

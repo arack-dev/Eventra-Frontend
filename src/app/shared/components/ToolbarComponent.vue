@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import {useSidebarStore} from "@/stores/sidebar";
-import BreadcrumbComponent from "@/app/shared/components/BreadcrumbComponent.vue";
+import { ref } from 'vue'
+import { useSidebarStore } from '@/stores/sidebar'
+import BreadcrumbComponent from '@/app/shared/components/BreadcrumbComponent.vue'
 
-const store = useSidebarStore();
+const store = useSidebarStore()
 
 const toggleSidebar = () => {
-  store.toggleSidebar();
-};
+  store.toggleSidebar()
+}
 
-const value = ref("");
-const items = ref([]);
+const value = ref('')
+const items = ref([])
 
 const search = (event) => {
-  let _items = [...Array(10).keys()];
+  let _items = [...Array(10).keys()]
 
-  items.value = event.query ? [...Array(10).keys()].map((item) => event.query + '-' + item) : _items;
+  items.value = event.query ? [...Array(10).keys()].map((item) => event.query + '-' + item) : _items
 }
 </script>
 
 <template>
   <Toolbar>
     <template #start>
-      <Button icon="pi pi-bars" @click="toggleSidebar" style="background: var(--color-main);" />
+      <Button icon="pi pi-bars" @click="toggleSidebar" style="background: var(--color-main)" />
       <BreadcrumbComponent />
     </template>
 
@@ -35,5 +35,4 @@ const search = (event) => {
   </Toolbar>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

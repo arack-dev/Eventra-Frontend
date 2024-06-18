@@ -1,10 +1,10 @@
-import {BaseService} from "@/app/shared/services/BaseService";
-import type {BookingModel} from "@/app/reservation/models/BookingModel";
+import { ApiBaseService } from '@/app/shared/services/ApiBaseService'
+import type { BookingModel } from '@/app/reservation/models/BookingModel'
 
-class BookingService extends BaseService<BookingModel>{
-    constructor() {
-        super('/reservations');
-    }
+class BookingService extends ApiBaseService<BookingModel> {
+  constructor() {
+    super('/reservations')
+  }
 }
 
-export default new BookingService();
+export default new BookingService()

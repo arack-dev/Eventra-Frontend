@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import ToolbarComponent from "@/app/shared/components/ToolbarComponent.vue";
-import EventsComponent from "@/app/events/components/EventsComponent.vue";
-
+import ToolbarComponent from '@/app/shared/components/ToolbarComponent.vue'
+import EventsComponent from '@/app/events/components/EventsComponent.vue'
 </script>
 
 <template>
@@ -11,6 +10,4 @@ import EventsComponent from "@/app/events/components/EventsComponent.vue";
   </main>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

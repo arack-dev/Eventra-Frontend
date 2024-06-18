@@ -1,10 +1,10 @@
-import { BaseService } from '@/app/shared/services/BaseService';
-import type { UserModel } from '@/app/user/models/UserModel';
+import { ApiBaseService } from '@/app/shared/services/ApiBaseService'
+import type { UserModel } from '@/app/user/models/UserModel'
 
-class UserService extends BaseService<UserModel> {
-    constructor() {
-        super('/users');
-    }
+class UserService extends ApiBaseService<UserModel> {
+  constructor() {
+    super('/users')
+  }
 }
 
-export default new UserService();
+export default new UserService()

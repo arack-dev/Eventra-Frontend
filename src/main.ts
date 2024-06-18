@@ -9,13 +9,13 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import index from './router'
 import PrimeVue from 'primevue/config'
-import FocusTrap from 'primevue/focustrap';
+import FocusTrap from 'primevue/focustrap'
 
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(index)
 app.use(PrimeVue)
-app.directive('focustrap', FocusTrap);
+app.directive('focustrap', FocusTrap)
 
 app.mount('#app')

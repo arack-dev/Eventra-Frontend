@@ -3,11 +3,11 @@
   --color-main-soft: rgba(28, 56, 69, 0.8);
   --color-main-mute: rgba(28, 56, 69, 0.6);
 
-  --color-orange: #D46A2A;
+  --color-orange: #d46a2a;
   --color-orange-soft: rgba(213, 88, 49, 0.8);
   --color-orange-mute: rgba(213, 88, 49, 0.6);
 
-  --color-skyblue: #2E7DA6FF;
+  --color-skyblue: #2e7da6ff;
   --color-skyblue-soft: rgba(46, 125, 166, 0.8);
   --color-skyblue-mute: rgba(46, 125, 166, 0.6);
 }
