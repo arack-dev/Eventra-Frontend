@@ -7,7 +7,12 @@ const index = createRouter({
     {
       path: '/',
       name: 'dashboard',
-      component: DashboardView
+      component: () => import('@/app/events/views/DashboardView.vue')
+    },
+    {
+      path: '/event-detail/:id',
+      name: 'event-detail',
+      component: () => import('@/app/events/views/EventDetailView.vue')
     },
     {
       path: '/auth/register',

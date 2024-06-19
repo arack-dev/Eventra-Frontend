@@ -10,11 +10,12 @@ const auth = useAuthStore();
   <div class="sidebar flex flex-column justify-content-between gap-2 p-3" v-if="sidebar.visible">
     <div class="flex align-items-center justify-content-between flex-shrink-0">
       <span class="inline-flex align-items-center">
-        <Avatar
-          image="src/assets/img/logo_eventra.png"
+        <Image
+          src="/src/assets/img/logo_eventra.png"
           shape="circle"
           size="xlarge"
-          style="width: 6rem; height: auto"
+          alt="Logo Eventra"
+          width="100px" height="auto"
         />
         <span class="font-semibold text-5xl" style="color: var(--color-main)">ventra</span>
       </span>

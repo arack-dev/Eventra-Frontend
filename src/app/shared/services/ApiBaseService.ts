@@ -70,4 +70,8 @@ export class ApiBaseService<T> {
   async getAll() {
     return await this.http.get<T[]>(this.resourcePath()).catch(this.handleError)
   }
+
+  async getId(id: string | number) {
+    return await this.http.get<T>(`${this.resourcePath()}/${id}`).catch(this.handleError)
+  }
 }
