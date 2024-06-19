@@ -5,7 +5,7 @@ import { onMounted, ref } from 'vue'
 import type { EventModel } from '@/app/events/models/EventModel'
 import EventService from '@/app/events/services/EventService'
 
-const route = ref("");
+const label = ref("");
 const events = ref<EventModel[]>([])
 const loading =ref(true);
 
@@ -15,13 +15,15 @@ onMounted(async () => {
     events.value = response.data
   } catch (error) {
     console.log('Failed to fetch events:', error)
+  } finally {
+    loading.value = false;
   }
 })
 </script>
 
 <template>
   <main>
-    <ToolbarComponent :route="route" />
+    <ToolbarComponent :label="label" />
     <EventsComponent :events="events" :loading="loading" />
   </main>
 </template>

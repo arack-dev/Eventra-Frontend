@@ -51,6 +51,15 @@ b {
   color: var(--color-orange);
 }
 
+.btn {
+  background-color: var(--color-main);
+  border-color: var(--color-main);
+}
+.btn-orange {
+  background-color: var(--color-orange);
+  border-color:var(--color-orange);
+}
+
 .p-sidebar {
   transform: none;
   position: relative;

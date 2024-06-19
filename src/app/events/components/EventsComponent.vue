@@ -200,14 +200,14 @@ const search = (event: any) => {
                   <span class="text-2xl font-semibold text-900">${{ event.price }}</span>
                   <div class="flex gap-2">
                     <Button
-                      icon="pi pi-shopping-cart"
-                      label="Get Ticket"
+                      label="Event Detail"
                       style="background: var(--color-main)"
                       :disabled="event.inventoryStatus === 'OUTOFSTOCK'"
-                      class="flex-auto white-space-nowrap"
+                      class="btn flex-auto white-space-nowrap"
                       @click="goToEventDetail(event)"
                     ></Button>
-                    <Button icon="pi pi-heart" outlined></Button>
+                    <Button class="btn" icon="pi pi-heart"></Button>
+                    <Button class="btn" icon="pi pi-share-alt"></Button>
                   </div>
                 </div>
               </div>

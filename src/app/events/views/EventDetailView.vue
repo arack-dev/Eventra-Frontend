@@ -6,7 +6,7 @@ import router from '@/router'
 import EventService from '@/app/events/services/EventService'
 import { EventModel } from '@/app/events/models/EventModel'
 
-const route = ref("Event Detail");
+const label = ref("Event Detail");
 const id = ref(0);
 const event = ref(new EventModel())
 const loading = ref(true);
@@ -30,7 +30,7 @@ onMounted(async () => {
 
 <template>
   <main>
-    <ToolbarComponent :route="route" />
+    <ToolbarComponent :label="label" />
     <EventDetailComponent :event="event" :loading="loading" />
   </main>
 </template>

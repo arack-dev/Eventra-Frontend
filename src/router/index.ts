@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DashboardView from '@/app/events/views/DashboardView.vue'
+import DashboardView from '@/app/events/views/EventsView.vue'
 
 const index = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'dashboard',
-      component: () => import('@/app/events/views/DashboardView.vue')
+      name: 'events',
+      component: DashboardView
     },
     {
       path: '/event-detail/:id',
