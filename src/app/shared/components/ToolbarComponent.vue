@@ -8,19 +8,12 @@ const toggleSidebar = () => {
   store.toggleSidebar()
 }
 
-const value = ref('')
-const items = ref([])
-const home = ref({ label: 'Eventra', route: '/' })
+const home = ref({ icon: 'pi pi-home', route: '/' })
 
 const routes = ref([
-  { label: 'Dashboard', route: '/' },
   { label: `${route}`, route: '/' },
 ])
 
-const search = (event) => {
-  let _items = [...Array(10).keys()]
-  items.value = event.query ? [...Array(10).keys()].map((item) => event.query + '-' + item) : _items
-}
 </script>
 
 <template>
@@ -42,11 +35,11 @@ const search = (event) => {
     </template>
 
     <template #end>
-      <InputGroup class="mr-3">
-        <AutoComplete v-model="value" :suggestions="items" @complete="search" />
-        <Button icon="pi pi-search" severity="warning" />
-      </InputGroup>
-      <Button icon="pi pi-bars" @click="toggleSidebar" style="background: var(--color-main)" />
+      <div class="flex gap-2">
+        <Button icon="pi pi-bell" severity="warning" rounded aria-label="Notification" />
+        <Button icon="pi pi-cog" severity="warning" rounded aria-label="Notification" />
+        <Button class="btn-sidebar" icon="pi pi-bars" @click="toggleSidebar" aria-label="Sidebar Button" style="background: var(--color-main)" />
+      </div>
     </template>
   </Toolbar>
 </template>
@@ -56,6 +49,19 @@ const search = (event) => {
   padding: 1.5rem;
   .breadcrumb {
     padding: 0 !important;
+  }
+  .search {
+    display: none;
+  }
+  .btn-sidebar {
+    display: none;
+  }
+}
+@media screen and (max-width: 868px) {
+  .toolbar {
+    .btn-sidebar {
+      display: initial;
+    }
   }
 }
 </style>

@@ -14,23 +14,37 @@ function formatDate(dateString: any) {
   <section class="event">
     <div class="container">
       <div class="event__content">
-        <div class="image">
-          <img
-            class="block xl:block mx-auto border-round w-full"
-            :src="imageSrc"
-            :alt="event.title"
-          />
+        <div class="box-1">
+          <div class="item__detail">
+            <span>{{ event.categoryEvent?.name }}</span>
+            <h1>{{ event.title }}</h1>
+            <p>{{ event.description }}</p>
+            <p><b>Start Date:</b> {{ formatDate(event.startDate) }}</p>
+            <p><b>End Date:</b> {{ formatDate(event.endDate) }}</p>
+            <p><b>Location:</b> {{ event.location }}</p>
+            <Divider/>
+            <div v-if="event.organizer" class="organizer flex flex-column">
+              <span><b>Organizer:</b> {{ event.organizer.firstName }} {{ event.organizer.lastName }}</span>
+              <span v-if="event.organizer.email">{{ event.organizer.email }}</span>
+            </div>
+          </div>
         </div>
-        <div class="detail bg-filter">
-          <h1>{{ event.title }}</h1>
-          <p><b>Description:</b> {{ event.description }}</p>
-          <p><b>Start Date:</b> {{ formatDate(event.startDate) }}</p>
-          <p><b>End Date:</b> {{ formatDate(event.endDate) }}</p>
-          <p><b>Location:</b> {{ event.location }}</p>
-          <p><b>Category:</b> {{ event.categoryEvent?.name }}</p>
-          <div v-if="event.organizer">
-            <p><b>Organizer:</b> {{ event.organizer.firstName }} {{ event.organizer.lastName }}</p>
-            <p v-if="event.organizer.email"><b>Email:</b> {{ event.organizer.email }}</p>
+        <div class="box-2 flex flex-column">
+          <div class="item__header flex gap-3">
+            <Button
+              icon="pi pi-shopping-cart"
+              label="Get Ticket"
+              :disabled="event.inventoryStatus === 'OUTOFSTOCK'"
+              class="flex-auto md:flex-initial white-space-nowrap"
+            ></Button>
+            <Button type="button" icon="pi pi-heart" outlined />
+          </div>
+          <div class="item__image">
+            <img
+              class="block xl:block mx-auto border-round w-full"
+              :src="imageSrc"
+              :alt="event.title"
+            />
           </div>
         </div>
       </div>
@@ -40,27 +54,39 @@ function formatDate(dateString: any) {
 
 <style scoped>
 .event .container {
+  padding: var(--space-pg);
   //max-width: 1200px;
   .event__content {
     display: flex;
     flex-wrap: wrap;
-    //justify-content: space-between;
-    .image {
-      margin-right: 20px;
-      max-width: min(50rem, 100%);
-      img {
-        width: 100%;
+    gap: var(--space-pg);
+    .box-1 {
+      width: min(30rem, 100%);
+      .item__detail {
+        h1 {
+          font-size: 2em;
+          font-weight: bold;
+        }
       }
     }
-    .detail {
-      width: min(30rem, 100%);
-      h1 {
-        font-size: 2em;
-        font-weight: bold;
+    .box-2 {
+      width: 30rem;
+      flex-grow: 1;
+      gap: var(--space-pg);
+
+      .item__header {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+
       }
-      p {
-        b {
-          font-weight: bold;
+      .item__image {
+        width: 100%;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          aspect-ratio: 16 / 9;
         }
       }
     }

@@ -23,15 +23,62 @@ const getSeverity = (product: any) => {
 
 const goToEventDetail = (event: any) => {
   router.push('event-detail/' + event.id);
-
+}
+//search
+const value = ref('')
+const items = ref([])
+const search = (event: any) => {
+  let _items = [...Array(10).keys()]
+  items.value = event.query ? [...Array(10).keys()].map((item) => event.query + '-' + item) : _items
 }
 </script>
 
 <template>
   <section class="my-events">
-    <DataView :value="events" :layout="layout" paginator :rows="8">
+    <template v-if="loading">
+      <div class="flex justify-content-between">
+        <InputGroup class="search w-30rem">
+          <AutoComplete v-model="value" :suggestions="items" @complete="search" />
+          <Button icon="pi pi-search" severity="warning" />
+        </InputGroup>
+        <DataViewLayoutOptions v-model="layout" />
+      </div>
+      <Divider/>
+      <div class="grid grid-nogutter">
+        <div v-for="index in 8" :key="index" class="col-12 sm:col-6 md:col-6 xl:col-3 p-2">
+          <div class="p-4 border-1 surface-border surface-card border-round flex flex-column">
+            <div class="surface-50 flex justify-content-center border-round p-3">
+              <Skeleton shape="rectangle" width="100%" height="200px" />
+            </div>
+            <div class="pt-4">
+              <div class="flex flex-row justify-content-between align-items-start gap-2">
+                <div>
+                  <Skeleton width="70%" height="1.5rem" />
+                  <Skeleton width="50%" height="1.5rem" class="mt-1" />
+                </div>
+                <div class="surface-100 p-1" style="border-radius: 30px">
+                  <Skeleton width="40px" height="1.5rem" />
+                </div>
+              </div>
+              <div class="flex flex-column gap-4 mt-4">
+                <Skeleton width="50%" height="2rem" />
+                <div class="flex gap-2">
+                  <Skeleton shape="rectangle" width="85%" height="2.2rem" />
+                  <Skeleton shape="rectangle" width="15%" height="2.2rem" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+    <DataView v-else :value="events" :layout="layout" paginator :rows="8">
       <template #header>
-        <div class="flex justify-content-end">
+        <div class="flex justify-content-between">
+          <InputGroup class="search w-30rem">
+            <AutoComplete v-model="value" :suggestions="items" @complete="search" />
+            <Button icon="pi pi-search" severity="warning" />
+          </InputGroup>
           <DataViewLayoutOptions v-model="layout" />
         </div>
       </template>
