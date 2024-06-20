@@ -7,14 +7,13 @@ const auth = useAuthStore();
 </script>
 
 <template>
-  <div class="sidebar flex flex-column justify-content-between gap-2 p-3" v-if="sidebar.visible">
+  <div class="sidebar flex flex-column justify-content-between gap-2 p-3" :class="{ 'visible': sidebar.visible }">
     <div class="flex align-items-center justify-content-between flex-shrink-0">
       <span class="inline-flex align-items-center">
-        <Avatar
-          image="src/assets/img/logo_eventra.png"
-          shape="circle"
-          size="xlarge"
-          style="width: 6rem; height: auto"
+        <Image
+          src="/src/assets/img/logo_eventra.png"
+          alt="Logo Eventra"
+          width="100px" height="auto"
         />
         <span class="font-semibold text-5xl" style="color: var(--color-main)">ventra</span>
       </span>
@@ -123,7 +122,6 @@ const auth = useAuthStore();
     background: var(--surface-100);
   }
 }
-
 .router-link-active {
   background: transparent !important;
   i,
@@ -131,9 +129,12 @@ const auth = useAuthStore();
     color: var(--color-skyblue);
   }
 }
-@media screen and (max-width: 768px) {
+@media (max-width: 868px) {
   .sidebar {
     position: fixed;
+  }
+  .sidebar.visible {
+    display: none !important;
   }
 }
 </style>
