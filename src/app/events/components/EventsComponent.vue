@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import router from '@/router'
 
-const { events, loading } = defineProps(['events', 'loading']);
+const { events, loading } = defineProps(['events', 'loading'])
 const layout = ref('grid')
 
 const getSeverity = (product: any) => {
@@ -22,7 +22,7 @@ const getSeverity = (product: any) => {
 }
 
 const goToEventDetail = (event: any) => {
-  router.push('event-detail/' + event.id);
+  router.push('event-detail/' + event.id)
 }
 //search
 const value = ref('')
@@ -43,7 +43,7 @@ const search = (event: any) => {
         </InputGroup>
         <DataViewLayoutOptions v-model="layout" />
       </div>
-      <Divider/>
+      <Divider />
       <div class="grid grid-nogutter">
         <div v-for="index in 8" :key="index" class="col-12 sm:col-6 md:col-6 xl:col-3 p-2">
           <div class="p-4 border-1 surface-border surface-card border-round flex flex-column">
@@ -112,7 +112,7 @@ const search = (event: any) => {
                   <div>
                     <span class="font-medium text-secondary text-sm">{{
                         event.categoryEvent.name
-                    }}</span>
+                      }}</span>
                     <div class="text-lg font-medium text-900 mt-2">{{ event.title }}</div>
                   </div>
                   <div class="surface-100 p-1" style="border-radius: 30px">
@@ -178,7 +178,7 @@ const search = (event: any) => {
                   <div>
                     <span class="font-medium text-secondary text-sm">{{
                         event.categoryEvent.name
-                    }}</span>
+                      }}</span>
                     <div class="text-lg font-medium text-900 mt-1">{{ event.title }}</div>
                   </div>
                   <div class="surface-100 p-1" style="border-radius: 30px">

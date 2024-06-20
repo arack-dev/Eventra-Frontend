@@ -25,7 +25,7 @@ const signIn = async () => {
       password: password.value
     })
     authStore.connected();
-    await router.push({ name: 'dashboard' });
+    await router.push({ name: 'events' });
   } catch (error) {
     console.error('Error al iniciar sesión:', error)
   }

@@ -6,26 +6,26 @@ import router from '@/router'
 import EventService from '@/app/events/services/EventService'
 import { EventModel } from '@/app/events/models/EventModel'
 
-const label = ref("Event Detail");
-const id = ref(0);
+const label = ref('Event Detail')
+const id = ref(0)
 const event = ref(new EventModel())
-const loading = ref(true);
+const loading = ref(true)
 
 onMounted(async () => {
-  const parts = router.currentRoute.value.path.split('/');
-  id.value = Number(parts[parts.length - 1]);
+  const parts = router.currentRoute.value.path.split('/')
+  id.value = Number(parts[parts.length - 1])
 
   try {
-    const response = await EventService.getId(id.value);
-    console.log(response.data);
-    event.value = response.data;
-    console.log(event.value);
+    const response = await EventService.getId(id.value)
+    console.log(response.data)
+    event.value = response.data
+    console.log(event.value)
   } catch (error) {
-    throw new Error("PIPIPI")
+    throw new Error('PIPIPI')
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-});
+})
 </script>
 
 <template>

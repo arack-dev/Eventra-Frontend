@@ -7,7 +7,7 @@ import EventService from '@/app/events/services/EventService'
 
 const label = ref("");
 const events = ref<EventModel[]>([])
-const loading =ref(true);
+const loading = ref(true);
 
 onMounted(async () => {
   try {
