@@ -1,26 +1,35 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import router from '@/router'
+import type { EventModel } from '@/app/events/models/EventModel'
+import EventService from '@/app/events/services/EventService'
 
-const { events, loading } = defineProps(['events', 'loading'])
 const layout = ref('grid')
+const events = ref<EventModel[]>([])
+const loading = ref(true)
 
+onMounted(async () => {
+  try {
+    const response = await EventService.getAll()
+    events.value = response.data
+  } catch (error) {
+    console.log('Failed to fetch events:', error)
+  } finally {
+    loading.value = false
+  }
+})
 const getSeverity = (product: any) => {
   switch (product.inventoryStatus) {
     case 'INSTOCK':
       return 'success'
-
     case 'LOWSTOCK':
       return 'warning'
-
     case 'OUTOFSTOCK':
       return 'danger'
-
     default:
       return null
   }
 }
-
 const goToEventDetail = (event: any) => {
   router.push('event-detail/' + event.id)
 }

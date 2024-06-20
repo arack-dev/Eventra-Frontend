@@ -1,11 +1,15 @@
 // pinia/index.ts
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import router from '@/router'
 
 export const useAuthStore = defineStore('auth', () => {
   const email = ref('')
   const password = ref('')
-  const registered = ref(false)
+  const isLoggedIn = ref(false)
+  const token = localStorage.getItem('token')
+
+  isLoggedIn.value = !!token
 
   function login(_email: string, _password: string) {
     email.value = _email
@@ -14,8 +18,15 @@ export const useAuthStore = defineStore('auth', () => {
   }
   //rememberSession
   function connected() {
-    registered.value = true
+    isLoggedIn.value = true;
+  }
+  function logout() {
+    email.value = ''
+    password.value = ''
+    localStorage.removeItem('token')
+    isLoggedIn.value = false
+    router.push('/')
   }
 
-  return { email, password, registered, login, connected }
+  return { email, password, isLoggedIn, login, connected, logout }
 })

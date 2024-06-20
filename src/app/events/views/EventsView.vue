@@ -6,19 +6,6 @@ import type { EventModel } from '@/app/events/models/EventModel'
 import EventService from '@/app/events/services/EventService'
 
 const label = ref("");
-const events = ref<EventModel[]>([])
-const loading = ref(true);
-
-onMounted(async () => {
-  try {
-    const response = await EventService.getAll()
-    events.value = response.data
-  } catch (error) {
-    console.log('Failed to fetch events:', error)
-  } finally {
-    loading.value = false;
-  }
-})
 </script>
 
 <template>

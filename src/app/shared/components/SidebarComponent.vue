@@ -2,12 +2,12 @@
 import { useSidebarStore } from '@/stores/sidebar'
 import { useAuthStore } from '@/stores/auth'
 
-const sidebar = useSidebarStore()
-const auth = useAuthStore();
+const sidebarStore = useSidebarStore()
+const authStore = useAuthStore()
 </script>
 
 <template>
-  <div class="sidebar flex flex-column justify-content-between gap-2 p-3" :class="{ 'visible': sidebar.visible }">
+  <div class="sidebar flex flex-column justify-content-between gap-2 p-3" :class="{ 'visible': sidebarStore.visible }">
     <div class="flex align-items-center justify-content-between flex-shrink-0">
       <span class="inline-flex align-items-center">
         <Image
@@ -28,7 +28,7 @@ const auth = useAuthStore();
         <span class="font-medium">Dashboard</span>
       </router-link>
 
-      <div class="list-none m-0 overflow-hidden" v-if="auth.registered">
+      <div class="list-none m-0 overflow-hidden" v-if="authStore.isLoggedIn">
         <router-link
           to="/auth/login"
           class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
@@ -50,7 +50,7 @@ const auth = useAuthStore();
         </router-link>
       </div>
 
-      <div class="list-none overflow-hidden" v-if="auth.registered">
+      <div class="list-none overflow-hidden" v-if="authStore.isLoggedIn">
         <router-link
           to="/calendar"
           class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
@@ -82,7 +82,7 @@ const auth = useAuthStore();
       </router-link>
     </div>
 
-    <div class="mt-auto" v-if="!auth.registered">
+    <div class="mt-auto" v-if="!authStore.isLoggedIn">
       <h3>Registrar o iniciar sesión</h3>
       <p>
         Descubre eventos culturales, educativos, deportivos, tecnologicos y muchos mas, conecta con
@@ -97,9 +97,10 @@ const auth = useAuthStore();
         <Button class="btn-outlined" label="Iniciar Sesion" outlined style="width: 100%" />
       </router-link>
     </div>
-    <div class="mt-auto" v-if="auth.registered">
+    <div class="mt-auto" v-if="authStore.isLoggedIn">
       <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
-      <a
+      <router-link
+        to="/profile"
         class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
       >
         <Avatar
@@ -107,7 +108,7 @@ const auth = useAuthStore();
           shape="circle"
         />
         <span class="font-bold">Amy Elsner</span>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>

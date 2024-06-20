@@ -25,7 +25,10 @@ export class EventModel {
       firstName: 'John',
       lastName: 'Doe',
       email: 'john.doe@example.com',
-      typeOfUser: null,
+      typeOfUser: {
+        typeId: 1,
+        description: 'Admin',
+      }
     } as UserModel;
     this.categoryEvent = {
       id: 1,

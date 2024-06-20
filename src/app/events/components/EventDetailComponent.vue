@@ -1,9 +1,29 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
-const { event, loading } = defineProps(['event', 'loading']);
+import { onMounted, ref } from 'vue'
+import { EventModel } from '@/app/events/models/EventModel'
+import router from '@/router'
+import EventService from '@/app/events/services/EventService'
 
 const imageSrc = "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEzMTA4NzY0ODgzNzUzNjQzNw%3D%3D/original/cda19e4c-ae11-47b1-831b-a29f94ab76dc.png?im_w=1200&im_q=highq";
+const id = ref(0)
+const event = ref(new EventModel())
+const loading = ref(true)
 
+onMounted(async () => {
+  const parts = router.currentRoute.value.path.split('/')
+  id.value = Number(parts[parts.length - 1])
+
+  try {
+    const response = await EventService.getId(id.value)
+    console.log(response.data)
+    event.value = response.data
+    console.log(event.value)
+  } catch (error) {
+    throw new Error('PIPIPI')
+  } finally {
+    loading.value = false
+  }
+})
 function formatDate(dateString: any) {
   const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
   return new Date(dateString).toLocaleDateString(undefined, options);

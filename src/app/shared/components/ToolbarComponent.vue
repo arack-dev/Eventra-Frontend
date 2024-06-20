@@ -1,19 +1,37 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useSidebarStore } from '@/stores/sidebar'
+import { useConfirm } from 'primevue/useconfirm'
+import { useToast } from 'primevue/usetoast'
+import ConfirmDialog from 'primevue/confirmdialog'
+import Toast from 'primevue/toast';
+import { useAuthStore } from '@/stores/auth'
+
 
 const { label } = defineProps(['label'])
-const store = useSidebarStore()
-const toggleSidebar = () => {
-  store.toggleSidebar()
-}
-
+const sidebarStore = useSidebarStore()
+const authStore = useAuthStore()
+const confirm = useConfirm();
+const toast = useToast();
 const home = ref({ icon: 'pi pi-home', route: '/' })
+const routes = ref([{ label: `${label}`, route: '' },])
 
-const routes = ref([
-  { label: `${label}`, route: '' },
-])
-
+const toggleSidebar = () => {
+  sidebarStore.toggleSidebar()
+}
+const requireConfirmation = () => {
+  confirm.require({
+    group: 'headless',
+    header: 'Are you sure?',
+    message: 'Please confirm to proceed.',
+    accept: () => {
+      authStore.logout()
+    },
+    reject: () => {
+      toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+    }
+  });
+};
 </script>
 
 <template>
@@ -38,10 +56,29 @@ const routes = ref([
       <div class="flex gap-2">
         <Button class="btn-orange" icon="pi pi-bell" severity="warning" rounded aria-label="Notification" />
         <Button class="btn-orange" icon="pi pi-cog" severity="warning" rounded aria-label="Notification" />
-        <Button class="btn-sidebar btn" icon="pi pi-bars" @click="toggleSidebar" aria-label="Sidebar Button" />
+        <Button class="btn-orange" icon="pi pi-sign-out" severity="warning" rounded aria-label="Notification"
+                @click="requireConfirmation" v-if="authStore.isLoggedIn" />
+        <Button class="btn-sidebar btn" icon="pi pi-bars" aria-label="Sidebar Button" @click="toggleSidebar" />
       </div>
     </template>
   </Toolbar>
+
+  <ConfirmDialog group="headless">
+    <template #container="{ message, acceptCallback, rejectCallback }">
+      <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
+        <div class="border-circle bg-primary inline-flex justify-content-center align-items-center h-6rem w-6rem -mt-8">
+          <i class="pi pi-question text-5xl"></i>
+        </div>
+        <span class="font-bold text-2xl block mb-2 mt-4">{{ message.header }}</span>
+        <p class="mb-0">{{ message.message }}</p>
+        <div class="flex align-items-center gap-2 mt-4">
+          <Button label="Log Out" @click="acceptCallback"></Button>
+          <Button label="Cancel" outlined @click="rejectCallback"></Button>
+        </div>
+      </div>
+    </template>
+  </ConfirmDialog>
+  <Toast position="bottom-right" />
 </template>
 
 <style scoped>
