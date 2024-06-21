@@ -1,28 +1,40 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import router from '@/router'
+import type { EventModel } from '@/app/events/models/EventModel'
+import EventService from '@/app/events/services/EventService'
+import { useAuthStore } from '@/stores/auth'
 
-const { events, loading } = defineProps(['events', 'loading']);
 const layout = ref('grid')
+const events = ref<EventModel[]>([])
+const loading = ref(true)
+const eventImage = ref('https://grandluxormice.com/es/wp-content/uploads/sites/3/2022/07/Evento-corporativo-e1661944165280-1900x1069.jpg')
+const authStore = useAuthStore()
 
+onMounted(async () => {
+  try {
+    const response = await EventService.getAll()
+    events.value = response.data
+  } catch (error) {
+    console.log('Failed to fetch events:', error)
+  } finally {
+    loading.value = false
+  }
+})
 const getSeverity = (product: any) => {
   switch (product.inventoryStatus) {
     case 'INSTOCK':
       return 'success'
-
     case 'LOWSTOCK':
       return 'warning'
-
     case 'OUTOFSTOCK':
       return 'danger'
-
     default:
       return null
   }
 }
-
 const goToEventDetail = (event: any) => {
-  router.push('event-detail/' + event.id);
+  router.push('event-detail/' + event.id)
 }
 //search
 const value = ref('')
@@ -43,7 +55,7 @@ const search = (event: any) => {
         </InputGroup>
         <DataViewLayoutOptions v-model="layout" />
       </div>
-      <Divider/>
+      <Divider />
       <div class="grid grid-nogutter">
         <div v-for="index in 8" :key="index" class="col-12 sm:col-6 md:col-6 xl:col-3 p-2">
           <div class="p-4 border-1 surface-border surface-card border-round flex flex-column">
@@ -61,7 +73,6 @@ const search = (event: any) => {
                 </div>
               </div>
               <div class="flex flex-column gap-4 mt-4">
-                <Skeleton width="50%" height="2rem" />
                 <div class="flex gap-2">
                   <Skeleton shape="rectangle" width="85%" height="2.2rem" />
                   <Skeleton shape="rectangle" width="15%" height="2.2rem" />
@@ -93,7 +104,7 @@ const search = (event: any) => {
               <div class="md:w-10rem relative">
                 <img
                   class="block xl:block mx-auto border-round w-full"
-                  :src="`https://primefaces.org/cdn/primevue/images/product/${event.image}`"
+                  :src="eventImage"
                   :alt="event.title"
                 />
                 <Tag
@@ -112,7 +123,7 @@ const search = (event: any) => {
                   <div>
                     <span class="font-medium text-secondary text-sm">{{
                         event.categoryEvent.name
-                    }}</span>
+                      }}</span>
                     <div class="text-lg font-medium text-900 mt-2">{{ event.title }}</div>
                   </div>
                   <div class="surface-100 p-1" style="border-radius: 30px">
@@ -131,14 +142,15 @@ const search = (event: any) => {
                   </div>
                 </div>
                 <div class="flex flex-column md:align-items-end gap-5">
-                  <span class="text-xl font-semibold text-900">${{ event.location }}</span>
+                  <span class="text-xl font-semibold text-900">{{ event.location }}</span>
                   <div class="flex flex-row-reverse md:flex-row gap-2">
-                    <Button icon="pi pi-heart" outlined></Button>
+                    <Button icon="pi pi-bookmark" outlined v-if="authStore.isLoggedIn"/>
+                    <Button class="btn" icon="pi pi-share-alt"/>
                     <Button
                       icon="pi pi-shopping-cart"
                       label="Get Ticket"
                       :disabled="event.inventoryStatus === 'OUTOFSTOCK'"
-                      class="flex-auto md:flex-initial white-space-nowrap"
+                      class="btn flex-auto md:flex-initial white-space-nowrap"
                       @click="goToEventDetail(event)"
                     ></Button>
                   </div>
@@ -161,7 +173,7 @@ const search = (event: any) => {
                 <div class="relative mx-auto">
                   <img
                     class="border-round w-full"
-                    :src="`https://primefaces.org/cdn/primevue/images/product/${event.image}`"
+                    :src="eventImage"
                     :alt="event.name"
                     style="max-width: 300px"
                   />
@@ -178,7 +190,7 @@ const search = (event: any) => {
                   <div>
                     <span class="font-medium text-secondary text-sm">{{
                         event.categoryEvent.name
-                    }}</span>
+                      }}</span>
                     <div class="text-lg font-medium text-900 mt-1">{{ event.title }}</div>
                   </div>
                   <div class="surface-100 p-1" style="border-radius: 30px">
@@ -197,17 +209,16 @@ const search = (event: any) => {
                   </div>
                 </div>
                 <div class="flex flex-column gap-4 mt-4">
-                  <span class="text-2xl font-semibold text-900">${{ event.price }}</span>
                   <div class="flex gap-2">
                     <Button
-                      label="Event Detail"
+                      label="Get Ticket"
                       style="background: var(--color-main)"
                       :disabled="event.inventoryStatus === 'OUTOFSTOCK'"
                       class="btn flex-auto white-space-nowrap"
                       @click="goToEventDetail(event)"
                     ></Button>
-                    <Button class="btn" icon="pi pi-heart"></Button>
-                    <Button class="btn" icon="pi pi-share-alt"></Button>
+                    <Button class="btn" icon="pi pi-bookmark" v-if="authStore.isLoggedIn" />
+                    <Button class="btn" icon="pi pi-share-alt" />
                   </div>
                 </div>
               </div>

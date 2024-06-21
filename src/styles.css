@@ -24,6 +24,34 @@ main {
     overflow-y: scroll;
   }
 }
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .content {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .footer {
+    display: flex;
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
 b {
   font-weight: bold;
 }
@@ -58,6 +86,10 @@ b {
 .btn-orange {
   background-color: var(--color-orange);
   border-color:var(--color-orange);
+}
+.btn-auth {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-style: none;
 }
 
 .p-sidebar {

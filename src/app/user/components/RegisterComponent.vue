@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import AuthService from '@/app/user/services/AuthService'
 import router from '@/router'
+import Toast from 'primevue/toast'
+import { useToast } from 'primevue/usetoast'
 
 const visible = ref(true);
 const firstname = ref('');
@@ -10,28 +12,43 @@ const lastname = ref('');
 const email = ref('');
 const password = ref('');
 const accept = ref(false);
-const value = ref('Entusiasta');
-const options = ref(['Entusiasta', 'Organizador']);
 const active = ref(false);
 const authStore = useAuthStore();
+const toast = useToast();
 
 const register = async () => {
-  if (accept.value) {
+  if (accept.value && firstname.value && email.value && password.value) {
+    console.log("Accet:", accept.value)
     try {
       await AuthService.register({
         firstName: firstname.value,
         lastName: lastname.value,
         email: email.value,
         password: password.value,
-        typeId: 2,
+        typeId: 1,
       });
-      authStore.login(email.value, password.value);
-      await router.push({ name: 'login' });
+      authStore.login(email.value, password.value)
+      toast.add({
+        severity: 'success',
+        summary: 'Registration Successful',
+        detail: 'You have registered successfully. Welcome!',
+        life: 3000
+      });
     } catch (error) {
-      console.error('Error registrando usuario:', error);
+      toast.add({
+        severity: 'error',
+        summary: 'Registration Failed',
+        detail: 'There was an error during registration. Please try again later.',
+        life: 3000
+      });
     }
   } else {
-    console.error('Debe aceptar los términos y condiciones.');
+    toast.add({
+      severity: 'warn',
+      summary: 'Validation Error',
+      detail: 'Both email and password fields are required. Please fill them out and try again.',
+      life: 3000
+    });
   }
 };
 </script>
@@ -55,11 +72,9 @@ const register = async () => {
               <h1 style="font-weight: bold">Crear cuenta..</h1>
             </div>
 
-            <SelectButton style="height: 2rem" v-model="value" :options="options" />
-
             <div v-focustrap class="w-full flex flex-column gap-3">
               <InputGroup>
-                <InputGroupAddon class="bg-white-alpha-20 border-none text-primary-50"
+                <InputGroupAddon class="bg-white-alpha-10 border-none text-primary-50"
                   ><i class="pi pi-user"></i
                 ></InputGroupAddon>
                 <InputText
@@ -67,25 +82,25 @@ const register = async () => {
                   v-model="firstname"
                   type="firstname"
                   placeholder="First name"
-                  class="bg-white-alpha-20 border-none text-primary-50 w-20rem"
+                  class="bg-white-alpha-10 border-none text-primary-50 w-20rem"
                 />
               </InputGroup>
 
               <InputGroup>
-                <InputGroupAddon class="bg-white-alpha-20 border-none text-primary-50"
+                <InputGroupAddon class="bg-white-alpha-10 border-none text-primary-50"
                   ><i class="pi pi-user"></i
                 ></InputGroupAddon>
                 <InputText
                   id="lastname"
                   v-model="lastname"
                   type="lastname"
-                  placeholder="Last name"
-                  class="bg-white-alpha-20 border-none text-primary-50 w-20rem"
+                  placeholder="Last name (Optinal)"
+                  class="bg-white-alpha-10 border-none text-primary-50 w-20rem"
                 />
               </InputGroup>
 
               <InputGroup>
-                <InputGroupAddon class="bg-white-alpha-20 border-none text-primary-50"
+                <InputGroupAddon class="bg-white-alpha-10 border-none text-primary-50"
                   ><i class="pi pi-envelope"></i
                 ></InputGroupAddon>
                 <InputText
@@ -93,15 +108,15 @@ const register = async () => {
                   v-model="email"
                   type="email"
                   placeholder="Email"
-                  class="bg-white-alpha-20 border-none text-primary-50 w-20rem"
+                  class="bg-white-alpha-10 border-none text-primary-50 w-20rem"
                 />
               </InputGroup>
 
               <InputGroup>
-                <InputGroupAddon class="bg-white-alpha-20 border-none text-primary-50"
+                <InputGroupAddon class="bg-white-alpha-10 border-none text-primary-50"
                   ><i class="pi pi-lock"></i
                 ></InputGroupAddon>
-                <Password v-model="password" placeholder="Password" toggleMask>
+                <Password class="bg-white-alpha-10" v-model="password" placeholder="Password" toggleMask>
                   <template #header>
                     <h6>Pick a password</h6>
                   </template>
@@ -132,6 +147,7 @@ const register = async () => {
               </div>
 
               <Button
+                class="btn-auth"
                 style="background: black"
                 type="submit"
                 label="Registrar"
@@ -160,6 +176,7 @@ const register = async () => {
       </template>
     </Dialog>
   </div>
+  <Toast position="bottom-right" />
 </template>
 
 <style>
@@ -195,16 +212,11 @@ const register = async () => {
     h1 {
       color: var(--light-soft);
     }
-
-    .p-button {
-      background: rgba(255, 255, 255, 0.2) !important;
-      border-style: none;
-    }
   }
 }
 
 .p-password-input {
-  background: rgba(255, 255, 255, 0.2) !important;
+  background: transparent;
   color: var(--primary-50) !important;
   border-style: none;
   box-shadow:

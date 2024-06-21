@@ -2,32 +2,55 @@
 import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import AuthService from '@/app/user/services/AuthService'
-import router from '@/router'
+import Toast from 'primevue/toast'
+import { useToast } from 'primevue/usetoast'
 
 const visible = ref(true)
 const email = ref('')
 const password = ref('')
 const accept = ref(false)
+const active = ref(false);
 const authStore = useAuthStore();
+const toast = useToast();
 
 onMounted(() => {
-  const auth = useAuthStore()
-  if (auth.registered) {
-    email.value = auth.email
-    password.value = auth.password
+  if (authStore.isRegistered) {
+    email.value = authStore.email
+    password.value = authStore.password
   }
 })
 
 const signIn = async () => {
-  try {
-    await AuthService.login({
-      email: email.value,
-      password: password.value
-    })
-    authStore.connected();
-    await router.push({ name: 'dashboard' });
-  } catch (error) {
-    console.error('Error al iniciar sesión:', error)
+  if(email.value && password.value) {
+    try {
+      await AuthService.login({
+        email: email.value,
+        password: password.value
+      })
+      if(active.value) {
+        localStorage.setItem('email', email.value)
+        localStorage.setItem('password', password.value)
+        authStore.rememberSession(email.value, password.value);
+      } else {
+        sessionStorage.setItem('email', email.value)
+        sessionStorage.setItem('password', password.value)
+        authStore.rememberSession(email.value, password.value);
+      }
+    } catch (error) {
+      toast.add({
+        severity: 'error',
+        summary: 'Rejected',
+        detail: 'The email or password you entered is incorrect. Please try again.',
+        life: 3000
+      });
+    }
+  } else {
+    toast.add({
+      severity: 'warn',
+      summary: 'Validation Error',
+      detail: 'Both email and password fields are required. Please fill them out and try again.',
+      life: 3000
+    });
   }
 }
 </script>
@@ -63,7 +86,7 @@ const signIn = async () => {
 
             <div v-focustrap class="w-full flex flex-column gap-3">
               <InputGroup>
-                <InputGroupAddon class="bg-white-alpha-20 border-none text-primary-50"
+                <InputGroupAddon class="bg-white-alpha-10 border-none text-primary-50"
                   ><i class="pi pi-envelope"></i
                 ></InputGroupAddon>
                 <InputText
@@ -71,15 +94,15 @@ const signIn = async () => {
                   v-model="email"
                   type="email"
                   placeholder="Email"
-                  class="bg-white-alpha-20 border-none text-primary-50"
+                  class="bg-white-alpha-10 border-none text-primary-50"
                 />
               </InputGroup>
 
               <InputGroup>
-                <InputGroupAddon class="bg-white-alpha-20 border-none text-primary-50"
+                <InputGroupAddon class="bg-white-alpha-10 border-none text-primary-50"
                   ><i class="pi pi-lock"></i
                 ></InputGroupAddon>
-                <Password v-model="password" placeholder="Password" toggleMask class="">
+                <Password class="bg-white-alpha-10" v-model="password" placeholder="Password" toggleMask>
                   <template #header>
                     <h6>Pick a password</h6>
                   </template>
@@ -97,24 +120,23 @@ const signIn = async () => {
               </InputGroup>
 
               <div class="field-checkbox">
-                <Checkbox id="accept" v-model="accept" name="accept" value="Accept" />
+                <Checkbox id="accept" v-model="accept" name="accept" value="Accept" @click="active = !active" />
                 <label for="accept" style="font-size: 0.8rem; color: var(--light-soft)"
                   >Mantener la sesion iniciada</label
                 >
               </div>
-              <Button @click="signIn" type="submit" label="Iniciar Sesion" />
+              <Button class="btn-auth" @click="signIn" type="submit" label="Iniciar Sesion" />
             </div>
 
             <div class="footer pt-3">
-              <router-link to="/" style="font-size: 0.8rem; color: var(--light-soft)"
-                >¿Olvidaste tu contraseña?</router-link
-              >
+              <router-link to="/forgot-password" style="font-size: 0.8rem; color: var(--light-soft)">¿Olvidaste tu contraseña?</router-link>
             </div>
           </div>
         </div>
       </template>
     </Dialog>
   </div>
+  <Toast position="bottom-right" />
 </template>
 
 <style>
@@ -153,7 +175,7 @@ const signIn = async () => {
   }
 }
 .p-password-input {
-  background: rgba(255, 255, 255, 0.2) !important;
+  background: transparent;
   color: var(--primary-50) !important;
   border-width: 0 !important;
   border-style: none;

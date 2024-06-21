@@ -48,7 +48,9 @@ export class ApiBaseService<T> {
       (response) => response,
       async (error: AxiosError) => {
         if (error.response && error.response.status === 401) {
-          // Handle token refresh logic here if needed
+          localStorage.removeItem('token');
+          alert('Session has expired. You will be redirected to the login page.');
+          window.location.href = 'auth/login';
         }
         return Promise.reject(error);
       }
@@ -64,6 +66,7 @@ export class ApiBaseService<T> {
   }
 
   async update(id: string | number, item: T) {
+    console.error('Service User:', item)
     return await this.http.put<T>(`${this.resourcePath()}/${id}`, item).catch(this.handleError)
   }
 
