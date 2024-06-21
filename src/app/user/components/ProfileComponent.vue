@@ -9,17 +9,24 @@ const bannerImage = ref('https://pbs.twimg.com/media/E4q_IIlWUAc9Z1n?format=jpg&
 const isEditing = ref(false);
 const user = ref(new UserModel())
 const loading = ref(false)
-//const id = ref(1)
-const authStore = useAuthStore()
+//const authStore = useAuthStore()
+const emailLocal = localStorage.getItem('email')
 
 onMounted(async () => {
   console.log('User', user.value)
+  console.log('Password onMounted', localStorage.getItem('password'))
 
   try {
-    console.error('Email:', authStore.email)
-    const response = await UserService.getEmail(authStore.email)
-    user.value = response.data
-    console.log('User In', user.value)
+    console.error('Email Profile:', localStorage.getItem('email'))
+    if(emailLocal) {
+      const response = await UserService.getEmail(emailLocal)
+      user.value = response.data
+      console.log('User In', user.value)
+    } else {
+      const response = await UserService.getEmail(sessionStorage.getItem('email'))
+      user.value = response.data
+      console.log('User In', user.value)
+    }
   } catch (error) {
     throw new Error('User Service')
   } finally {
@@ -29,24 +36,26 @@ onMounted(async () => {
 
 const startEditing = () => {
   isEditing.value = true;
-  console.error('UserEd:', user.value)
 };
 const saveProfile = async () => {
   try {
     console.error('Update User:', user.value)
+    console.log('PasswordsaveProfile', user.value.typeOfUser.typeId)
     await UserService.updateProfile(user.value.userId, {
       firstName: user.value.firstName,
       lastName: user.value.lastName,
       email: user.value.email,
-      password: "",
-      typeId: user.value.typeOfUser.typeId
+      password: "123",
+      typeId: 2//user.value.typeOfUser.typeId
     })
-
+    console.error('Email:', user.value.email)
+    console.log('Email saveProfile', localStorage.getItem('email'))
+    console.log('Password saveProfile', emailLocal ? (localStorage.getItem('password') || '') : (sessionStorage.getItem('password') || ''))
+    emailLocal ? localStorage.setItem('email', user.value.email) : sessionStorage.setItem('email', user.value.email)
   } catch (error) {
     console.error('Error al guardar el perfil:', error)
   }
   isEditing.value = false;
-
 };
 const cancelEditing = () => {
   isEditing.value = false;

@@ -4,19 +4,25 @@ import { useAuthStore } from '@/stores/auth'
 import UserService from '@/app/user/services/UserService'
 import { ref, onMounted, watch } from 'vue'
 import { UserModel } from '@/app/user/models/UserModel'
-//import { useUserStore } from '@/stores/user'
 
 const sidebarStore = useSidebarStore()
 const authStore = useAuthStore()
-//const userStore = useUserStore()
 const user = ref(new UserModel())
 
 const fetchUserData = async () => {
+  console.error('isLoggedIn:', authStore.isLoggedIn)
   if (authStore.isLoggedIn) {
     try {
-      console.error('Email:', authStore.email)
-      const response = await UserService.getEmail(authStore.email)
-      user.value = response.data
+      const emailLocal = localStorage.getItem('email')
+      if(emailLocal) {
+        console.error('Email:', authStore.email)
+        const response = await UserService.getEmail(emailLocal)
+        user.value = response.data
+      } else {
+        console.error('Email:', authStore.email)
+        const response = await UserService.getEmail(sessionStorage.getItem('email'))
+        user.value = response.data
+      }
     } catch (e) {
       console.error('Error fetching user data:', e)
     }

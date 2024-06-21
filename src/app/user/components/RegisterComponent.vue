@@ -27,7 +27,7 @@ const register = async () => {
         password: password.value,
         typeId: 1,
       });
-      authStore.login()
+      authStore.login(email.value, password.value)
       toast.add({
         severity: 'success',
         summary: 'Registration Successful',
@@ -147,6 +147,7 @@ const register = async () => {
               </div>
 
               <Button
+                class="btn-auth"
                 style="background: black"
                 type="submit"
                 label="Registrar"
@@ -210,11 +211,6 @@ const register = async () => {
     width: 22rem;
     h1 {
       color: var(--light-soft);
-    }
-
-    .p-button {
-      background: rgba(255, 255, 255, 0.2) !important;
-      border-style: none;
     }
   }
 }

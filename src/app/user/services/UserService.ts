@@ -6,7 +6,7 @@ class UserService extends ApiBaseService<UserModel> {
     super('/users')
   }
 
-  async getEmail(email: string) {
+  async getEmail(email: string | null) {
     return await this.http.get<any>(`${this.resourcePath()}/email/${email}`).catch(this.handleError)
   }
   async updateProfile(id: string | number, item: {

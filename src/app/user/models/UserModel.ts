@@ -10,7 +10,7 @@ export class UserModel {
 
   constructor() {
     this.userId = 0;
-    this.firstName = "Arack"
+    this.firstName = ""
     this.lastName = ""
     this.email = ""
     this.password = ""

@@ -25,6 +25,11 @@ const index = createRouter({
       component: () => import('@/app/user/components/LoginComponent.vue')
     },
     {
+      path: '/forgot-password',
+      name: 'forgot-password',
+      component: () => import('@/app/user/components/ForgotPasswordComponent.vue')
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: () => import('@/app/user/views/ProfileView.vue'),

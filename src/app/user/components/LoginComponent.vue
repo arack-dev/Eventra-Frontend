@@ -27,7 +27,15 @@ const signIn = async () => {
         email: email.value,
         password: password.value
       })
-      authStore.rememberSession(email.value, password.value);
+      if(active.value) {
+        localStorage.setItem('email', email.value)
+        localStorage.setItem('password', password.value)
+        authStore.rememberSession(email.value, password.value);
+      } else {
+        sessionStorage.setItem('email', email.value)
+        sessionStorage.setItem('password', password.value)
+        authStore.rememberSession(email.value, password.value);
+      }
     } catch (error) {
       toast.add({
         severity: 'error',
@@ -112,12 +120,12 @@ const signIn = async () => {
               </InputGroup>
 
               <div class="field-checkbox">
-                <Checkbox id="accept" v-model="accept" name="accept" value="Accept" />
+                <Checkbox id="accept" v-model="accept" name="accept" value="Accept" @click="active = !active" />
                 <label for="accept" style="font-size: 0.8rem; color: var(--light-soft)"
                   >Mantener la sesion iniciada</label
                 >
               </div>
-              <Button @click="signIn" type="submit" label="Iniciar Sesion" />
+              <Button class="btn-auth" @click="signIn" type="submit" label="Iniciar Sesion" />
             </div>
 
             <div class="footer pt-3">

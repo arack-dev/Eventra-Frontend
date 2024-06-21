@@ -87,6 +87,10 @@ b {
   background-color: var(--color-orange);
   border-color:var(--color-orange);
 }
+.btn-auth {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-style: none;
+}
 
 .p-sidebar {
   transform: none;
