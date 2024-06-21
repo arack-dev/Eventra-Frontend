@@ -175,8 +175,8 @@ const cancelEditing = () => {
   .profile__header {
     margin-top: -60px;
     img {
-      width: 120px;
-      height: 120px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       border: 4px solid #fff;
       object-fit: cover;
