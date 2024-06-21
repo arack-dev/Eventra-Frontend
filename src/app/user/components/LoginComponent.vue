@@ -3,16 +3,19 @@ import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import AuthService from '@/app/user/services/AuthService'
 import router from '@/router'
+//import UserService from '@/app/user/services/UserService'
+import { useUserStore } from '@/stores/user'
 
 const visible = ref(true)
 const email = ref('')
 const password = ref('')
 const accept = ref(false)
 const authStore = useAuthStore();
+//const userStore = useUserStore();
 
 onMounted(() => {
   const auth = useAuthStore()
-  if (auth.registered) {
+  if (auth.isLoggedIn) {
     email.value = auth.email
     password.value = auth.password
   }
@@ -24,8 +27,11 @@ const signIn = async () => {
       email: email.value,
       password: password.value
     })
-    authStore.connected();
-    await router.push({ name: 'events' });
+    authStore.login(email.value, password.value);
+    //const response = await UserService.getId(1)
+    //console.log("UserLogin:", response.data)
+    //userStore.setUser(response.data)
+    await router.push('/');
   } catch (error) {
     console.error('Error al iniciar sesión:', error)
   }

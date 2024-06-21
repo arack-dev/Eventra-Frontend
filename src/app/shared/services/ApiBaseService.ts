@@ -49,6 +49,7 @@ export class ApiBaseService<T> {
       async (error: AxiosError) => {
         if (error.response && error.response.status === 401) {
           localStorage.removeItem('token');
+          alert('Session has expired. You will be redirected to the login page.');
           window.location.href = 'auth/login';
         }
         return Promise.reject(error);

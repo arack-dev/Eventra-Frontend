@@ -35,18 +35,18 @@ const requireConfirmation = () => {
 </script>
 
 <template>
-  <Toolbar class="toolbar">
+  <Toolbar class="toolbar" v-if="authStore.isLoggedIn">
     <template #start>
       <Breadcrumb class="breadcrumb" :home="home" :model="routes" style="border: none">
         <template #item="{ item, props }">
           <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
             <a :href="href" v-bind="props.action" @click="navigate">
-              <span class="icon" :class="[item.icon, 'text-color']" />
+              <span class="icon" :class="[item.icon]" />
               <span class="font">{{ item.label }}</span>
             </a>
           </router-link>
           <a v-else :href="item.url" :target="item.target" v-bind="props.action">
-            <span class="text-color">{{ item.label }}</span>
+            <span class="label">{{ item.label }}</span>
           </a>
         </template>
       </Breadcrumb>
@@ -54,10 +54,11 @@ const requireConfirmation = () => {
 
     <template #end>
       <div class="flex gap-2">
-        <Button class="btn-orange" icon="pi pi-bell" severity="warning" rounded aria-label="Notification" />
-        <Button class="btn-orange" icon="pi pi-cog" severity="warning" rounded aria-label="Notification" />
-        <Button class="btn-orange" icon="pi pi-sign-out" severity="warning" rounded aria-label="Notification"
-                @click="requireConfirmation" v-if="authStore.isLoggedIn" />
+        <Button class="btn-orange" icon="pi pi-bookmark" severity="warning" rounded aria-label="Settings" />
+        <Button class="btn-orange" icon="pi pi-bell" severity="warning" rounded aria-label="Settings" />
+        <Button class="btn-orange" icon="pi pi-cog" severity="warning" rounded aria-label="Settings" />
+        <Button class="btn-orange" icon="pi pi-sign-out" severity="warning" rounded aria-label="Sign Out"
+                @click="requireConfirmation" />
         <Button class="btn-sidebar btn" icon="pi pi-bars" aria-label="Sidebar Button" @click="toggleSidebar" />
       </div>
     </template>
@@ -84,8 +85,16 @@ const requireConfirmation = () => {
 <style scoped>
 .toolbar {
   padding: 1rem;
-  a .icon {
-    font-size: 2em;
+  a {
+    .icon {
+      font-size: 2em;
+      color: var(--color-main);
+    }
+    .label {
+      color: var(--color-main);
+      font-weight: bold;
+      font-size: 1.2em;
+    }
   }
   .breadcrumb {
     padding: 0 !important;

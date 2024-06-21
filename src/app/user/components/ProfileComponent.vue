@@ -2,19 +2,22 @@
 import { onMounted, ref } from 'vue'
 import UserService from '@/app/user/services/UserService'
 import { UserModel } from '@/app/user/models/UserModel'
+import { useAuthStore } from '@/stores/auth'
 
 const profileImage = ref('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e7d41a64-fb9c-4118-a9ab-54e7785bf449/dckl3rs-8e1c482e-ad79-464e-ad7a-df02f64452c9.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2U3ZDQxYTY0LWZiOWMtNDExOC1hOWFiLTU0ZTc3ODViZjQ0OVwvZGNrbDNycy04ZTFjNDgyZS1hZDc5LTQ2NGUtYWQ3YS1kZjAyZjY0NDUyYzkuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.ZrL8it61GL668GQtagdPhINxO9vAbbSEszi2RUQpax0')
 const bannerImage = ref('https://pbs.twimg.com/media/E4q_IIlWUAc9Z1n?format=jpg&name=large')
 const isEditing = ref(false);
 const user = ref(new UserModel())
-const loading = ref(true)
-const id = ref(11)
+const loading = ref(false)
+//const id = ref(1)
+const authStore = useAuthStore()
 
 onMounted(async () => {
   console.log('User', user.value)
 
   try {
-    const response = await UserService.getId(id.value)
+    console.error('Email:', authStore.email)
+    const response = await UserService.getEmail(authStore.email)
     user.value = response.data
     console.log('User In', user.value)
   } catch (error) {
@@ -30,7 +33,6 @@ const startEditing = () => {
 };
 const saveProfile = async () => {
   try {
-
     console.error('Update User:', user.value)
     await UserService.updateProfile(user.value.userId, {
       firstName: user.value.firstName,
@@ -39,6 +41,7 @@ const saveProfile = async () => {
       password: "",
       typeId: user.value.typeOfUser.typeId
     })
+
   } catch (error) {
     console.error('Error al guardar el perfil:', error)
   }
