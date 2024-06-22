@@ -49,8 +49,13 @@
     --color-card: black;
   }
 }
-
-@media screen and (max-width: 524px) {
+@media screen and (max-width: 1124px) {
   :root {
+    --space-pg: 1rem;
+  }
+}
+@media screen and (max-width: 868px) {
+  :root {
+    --space-pg: .5rem;
   }
 }

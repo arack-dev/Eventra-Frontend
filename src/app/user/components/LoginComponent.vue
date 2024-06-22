@@ -187,8 +187,24 @@ const signIn = async () => {
 
 @media screen and (max-width: 768px) {
   .sign {
+    flex-direction: column;
     .image {
-      display: none;
+      background-position: right;
+
+      .btn-close {
+        float: right;
+      }
+      .to {
+        font-weight: bold;
+        background: white;
+        .redirect {
+          font-weight: bold;
+          color: var(--color-skyblue);
+          &:hover {
+            color: var(--color-orange);
+          }
+        }
+      }
     }
   }
 }

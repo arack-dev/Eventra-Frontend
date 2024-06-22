@@ -66,7 +66,7 @@ const register = async () => {
       }"
     >
       <template #container="{ closeCallback }">
-        <div class="sign flex gap-1">
+        <div class="sign up flex gap-1">
           <div class="card flex flex-column justify-content-center gap-4 p-fluid">
             <div class="header flex justify-content-between align-items-center">
               <h1 style="font-weight: bold">Crear cuenta..</h1>
@@ -226,10 +226,8 @@ const register = async () => {
 }
 
 @media screen and (max-width: 768px) {
-  .sign {
-    .image {
-      display: none;
-    }
+  .sign.up {
+    flex-direction: column-reverse;
   }
 }
 </style>
