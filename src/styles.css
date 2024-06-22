@@ -41,9 +41,13 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 2rem;
+    gap: var(--space-pg);
+    .box {
+      flex-grow: 1;
+    }
   }
   .footer {
+    width: 100%;
     display: flex;
   }
 }

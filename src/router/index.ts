@@ -35,6 +35,12 @@ const index = createRouter({
       component: () => import('@/app/user/views/ProfileView.vue'),
       meta: { requiresAuth: true }
     },
+    {
+      path: '/post',
+      name: 'post',
+      component: () => import('@/app/ticket/views/CreateTicketVIew.vue'),
+      meta: { requiresAuth: true }
+    },
   ]
 })
 
@@ -44,9 +50,9 @@ index.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token');
 
   if (requiresAuth && !token) {
-    next('/'); // Redirigir a la página de inicio de sesión si no está autenticado
+    next('/');
   } else {
-    next(); // Permitir el acceso a la ruta
+    next();
   }
 });
 

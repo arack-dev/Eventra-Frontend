@@ -61,10 +61,10 @@ watch(() => authStore.isLoggedIn, () => {
       </router-link>
 
       <router-link
-        to="/auth/register"
+        to="/post"
         class="organizer flex align-items-center justify-content-between cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
       >
-        <span class="font-medium">Publicar Evento</span>
+        <span class="font-medium">Publicar en Eventra</span>
         <i class="pi pi-arrow-right"></i>
       </router-link>
     </div>
