@@ -10,36 +10,41 @@ const index = createRouter({
       component: DashboardView
     },
     {
-      path: '/event-detail/:id',
-      name: 'event-detail',
-      component: () => import('@/app/events/views/EventDetailView.vue')
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/app/shared/views/NotFoundView.vue'),
+    },
+    {
+      path: '/get-ticket/:id',
+      name: 'get-ticket',
+      component: () => import('@/app/ticket/views/GetTicketView.vue')
     },
     {
       path: '/auth/register',
       name: 'register',
-      component: () => import('@/app/user/components/RegisterComponent.vue')
+      component: () => import('@/app/user/views/RegisterView.vue')
     },
     {
       path: '/auth/login',
       name: 'login',
-      component: () => import('@/app/user/components/LoginComponent.vue')
+      component: () => import('@/app/user/views/LoginView.vue')
     },
     {
       path: '/forgot-password',
       name: 'forgot-password',
-      component: () => import('@/app/user/components/ForgotPasswordComponent.vue')
+      component: () => import('@/app/user/views/ForgotPasswordView.vue')
     },
     {
       path: '/profile',
       name: 'profile',
-      component: () => import('@/app/user/views/ProfileView.vue'),
+      component: () => import('@/app/user/views/UserProfileView.vue'),
       meta: { requiresAuth: true }
     },
     {
       path: '/post',
       name: 'post',
-      component: () => import('@/app/ticket/views/CreateTicketVIew.vue'),
-      meta: { requiresAuth: true }
+      component: () => import('@/app/user/views/PostView.vue'),
+      //meta: { requiresAuth: true }
     },
   ]
 })

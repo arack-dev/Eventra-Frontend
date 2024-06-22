@@ -15,6 +15,7 @@ const fetchUserData = async () => {
     try {
       const response = await UserService.getEmail(emailLocal ? emailLocal : sessionStorage.getItem('email'))
       user.value = response.data
+      user.value.url = 'https://www.fichajes.com/build/images/player-covers/lionel-messi.2183aef8.jpg'
     } catch (e) {
       console.error('Error fetching user data:', e)
     }
@@ -70,7 +71,7 @@ watch(() => authStore.isLoggedIn, () => {
     <div class="mt-auto" v-if="authStore.isLoggedIn">
       <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
       <router-link to="/profile" class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-        <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" />
+        <Avatar :image="user.url" shape="circle" />
         <span class="link-text font-bold">{{ user.firstName }} {{ user.lastName }}</span>
       </router-link>
     </div>

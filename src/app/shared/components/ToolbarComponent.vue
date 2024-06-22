@@ -57,7 +57,7 @@ const requireConfirmation = () => {
         <Button class="btn-orange" icon="pi pi-bookmark" severity="warning" rounded aria-label="Settings" />
         <Button class="btn-orange" icon="pi pi-bell" severity="warning" rounded aria-label="Settings" />
         <Button class="btn-orange" icon="pi pi-cog" severity="warning" rounded aria-label="Settings" />
-        <Button class="btn-orange" icon="pi pi-sign-out" severity="warning" rounded aria-label="Sign Out"
+        <Button class="btn" icon="pi pi-sign-out" severity="warning" rounded aria-label="Sign Out"
                 @click="requireConfirmation" />
         <Button class="btn-sidebar btn" icon="pi pi-bars" aria-label="Sidebar Button" @click="toggleSidebar" />
       </div>

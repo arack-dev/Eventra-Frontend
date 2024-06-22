@@ -91,6 +91,10 @@ b {
   background-color: var(--color-orange);
   border-color:var(--color-orange);
 }
+.btn-skyblue {
+  background-color: var(--color-skyblue);
+  border-color:var(--color-skyblue);
+}
 .btn-auth {
   background: rgba(255, 255, 255, 0.2) !important;
   border-style: none;

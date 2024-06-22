@@ -19,6 +19,6 @@ export class UserModel {
       typeId: 1,
       description: 'Admin',
     }
-    this.url = "https://www.fichajes.com/build/images/player-covers/lionel-messi.2183aef8.jpg"
+    this.url = ""
   }
 }

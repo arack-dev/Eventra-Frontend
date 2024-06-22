@@ -6,4 +6,5 @@ export interface EventRequestModel {
   location: string;
   organizerId: number;
   categoryId: number;
+  url: string;
 }
