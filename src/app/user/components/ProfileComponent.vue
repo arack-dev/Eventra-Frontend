@@ -2,31 +2,19 @@
 import { onMounted, ref } from 'vue'
 import UserService from '@/app/user/services/UserService'
 import { UserModel } from '@/app/user/models/UserModel'
-import { useAuthStore } from '@/stores/auth'
 
-const profileImage = ref('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e7d41a64-fb9c-4118-a9ab-54e7785bf449/dckl3rs-8e1c482e-ad79-464e-ad7a-df02f64452c9.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2U3ZDQxYTY0LWZiOWMtNDExOC1hOWFiLTU0ZTc3ODViZjQ0OVwvZGNrbDNycy04ZTFjNDgyZS1hZDc5LTQ2NGUtYWQ3YS1kZjAyZjY0NDUyYzkuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.ZrL8it61GL668GQtagdPhINxO9vAbbSEszi2RUQpax0')
 const bannerImage = ref('https://pbs.twimg.com/media/E4q_IIlWUAc9Z1n?format=jpg&name=large')
 const isEditing = ref(false);
 const user = ref(new UserModel())
 const loading = ref(false)
-//const authStore = useAuthStore()
 const emailLocal = localStorage.getItem('email')
 
 onMounted(async () => {
-  console.log('User', user.value)
-  console.log('Password onMounted', localStorage.getItem('password'))
 
   try {
-    console.error('Email Profile:', localStorage.getItem('email'))
-    if(emailLocal) {
-      const response = await UserService.getEmail(emailLocal)
-      user.value = response.data
-      console.log('User In', user.value)
-    } else {
-      const response = await UserService.getEmail(sessionStorage.getItem('email'))
-      user.value = response.data
-      console.log('User In', user.value)
-    }
+    const response = await UserService.getEmail(emailLocal ? emailLocal : sessionStorage.getItem('email'))
+    user.value = response.data
+
   } catch (error) {
     throw new Error('User Service')
   } finally {
@@ -39,18 +27,17 @@ const startEditing = () => {
 };
 const saveProfile = async () => {
   try {
-    console.error('Update User:', user.value)
-    console.log('PasswordsaveProfile', user.value.typeOfUser.typeId)
+    const passwordStore = emailLocal ? localStorage.getItem('password') : sessionStorage.getItem('password')
+    console.error('passwordStore', passwordStore)
+
     await UserService.updateProfile(user.value.userId, {
       firstName: user.value.firstName,
       lastName: user.value.lastName,
       email: user.value.email,
-      password: "123",
-      typeId: 2//user.value.typeOfUser.typeId
+      password: passwordStore,
+      typeId: user.value.typeOfUser.typeId,
+      url: "https://depauliaonline.com/wp-content/uploads/2021/09/IMG_5087-1-600x900.jpg"
     })
-    console.error('Email:', user.value.email)
-    console.log('Email saveProfile', localStorage.getItem('email'))
-    console.log('Password saveProfile', emailLocal ? (localStorage.getItem('password') || '') : (sessionStorage.getItem('password') || ''))
     emailLocal ? localStorage.setItem('email', user.value.email) : sessionStorage.setItem('email', user.value.email)
   } catch (error) {
     console.error('Error al guardar el perfil:', error)
@@ -116,7 +103,7 @@ const cancelEditing = () => {
       </div>
       <div class="container">
         <div class="profile__header header">
-          <img class="profile-image" :src="profileImage" alt="Profile Image" />
+          <img class="profile-image" :src="user.url" alt="Profile Image" />
         </div>
         <div class="profile__content content">
           <div class="box-1">

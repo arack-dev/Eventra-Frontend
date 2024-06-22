@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import type { CategoryModel } from '@/app/events/models/CategoryModel'
 import FileUploadComponent from '@/app/shared/components/FileUploadComponent.vue'
 import { UserModel } from '@/app/user/models/UserModel'
@@ -34,8 +33,6 @@ const categories = ref<CategoryModel[]>([
   { id: 3, name: 'Education' },
   { id: 4, name: 'Technology' }
 ])
-
-const router = useRouter()
 
 onMounted(async () => {
 

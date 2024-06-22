@@ -7,6 +7,7 @@ export class UserModel {
   email: string
   password: string
   typeOfUser: RoleModel
+  url: string
 
   constructor() {
     this.userId = 0;
@@ -18,5 +19,6 @@ export class UserModel {
       typeId: 1,
       description: 'Admin',
     }
+    this.url = "https://www.fichajes.com/build/images/player-covers/lionel-messi.2183aef8.jpg"
   }
 }

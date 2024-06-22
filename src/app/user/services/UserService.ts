@@ -15,6 +15,7 @@ class UserService extends ApiBaseService<UserModel> {
     email: string;
     password: string;
     typeId: number;
+    url: string;
   }) {
     console.error('Service User:', item)
     return await this.http.put<any>(`${this.resourcePath()}/${id}`, item).catch(this.handleError)
