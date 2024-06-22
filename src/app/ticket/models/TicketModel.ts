@@ -5,6 +5,6 @@ export interface TicketModel {
   event: EventModel
   price: number
   totalAvailable: number
-  category: number
+  category: string
   description: string
 }

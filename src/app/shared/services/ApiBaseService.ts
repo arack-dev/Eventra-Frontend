@@ -57,8 +57,8 @@ export class ApiBaseService<T> {
     );
   }
 
-  async create(item: T) {
-    return await this.http.post<T>(this.resourcePath(), item).catch(this.handleError)
+  async create(item: any) {
+    return await this.http.post<any>(this.resourcePath(), item).catch(this.handleError)
   }
 
   async delete(id: string | number) {
