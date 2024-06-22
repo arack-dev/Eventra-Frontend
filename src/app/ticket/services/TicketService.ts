@@ -1,10 +1,10 @@
-import {BaseService} from "@/app/shared/services/BaseService";
-import type {TicketModel} from "@/app/ticket/models/TicketModel";
+import { ApiBaseService } from '@/app/shared/services/ApiBaseService'
+import type { TicketModel } from '@/app/ticket/models/TicketModel'
 
-class TicketService extends BaseService<TicketModel>{
-    constructor() {
-        super('/tickets');
-    }
+class TicketService extends ApiBaseService<TicketModel> {
+  constructor() {
+    super('/tickets')
+  }
 }
 
-export default new TicketService();
+export default new TicketService()

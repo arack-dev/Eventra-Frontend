@@ -1,4 +1,4 @@
 export interface RoleModel {
-    typeId: number;
-    description: string;
+  typeId: number
+  description: string
 }

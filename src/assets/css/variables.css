@@ -3,16 +3,14 @@
   --color-main-soft: rgba(28, 56, 69, 0.8);
   --color-main-mute: rgba(28, 56, 69, 0.6);
 
-  --color-orange: #D46A2A;
+  --color-orange: #d46a2a;
   --color-orange-soft: rgba(213, 88, 49, 0.8);
   --color-orange-mute: rgba(213, 88, 49, 0.6);
 
-  --color-skyblue: #2E7DA6FF;
+  --color-skyblue: #2e7da6ff;
   --color-skyblue-soft: rgba(46, 125, 166, 0.8);
   --color-skyblue-mute: rgba(46, 125, 166, 0.6);
-}
 
-:root {
   --light: #f9fafb;
   --light-soft: rgba(249, 250, 251, 0.8);
   --light-mute: rgba(249, 250, 251, 0.6);
@@ -20,6 +18,8 @@
   --dark: #000000;
   --dark-soft: rgba(26, 28, 29, 0.8);
   --dark-mute: rgba(0, 0, 0, 0.6);
+
+  --space-pg: 1.5rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,14 +49,13 @@
     --color-card: black;
   }
 }
-
-@media screen {
+@media screen and (max-width: 1124px) {
   :root {
-    --space: 1.5rem;
+    --space-pg: 1rem;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 868px) {
   :root {
-    --space: 0.75rem;
+    --space-pg: .5rem;
   }
 }
