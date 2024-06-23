@@ -7,7 +7,7 @@ import { useAuthStore } from '@/stores/auth'
 import router from '@/router'
 import EventService from '@/app/events/services/EventService'
 
-const layout = ref('grid')
+const layout = ref<'list' | 'grid'>('grid')
 const events = ref<EventModel[]>([])
 const loading = ref(true)
 const eventImage = ref('https://grandluxormice.com/es/wp-content/uploads/sites/3/2022/07/Evento-corporativo-e1661944165280-1900x1069.jpg')
@@ -86,7 +86,7 @@ const filteredEvents = computed(() => {
           </div>
         </div>
       </template>
-      <DataView v-else :value="filteredEvents" :layout="layout" paginator :rows="8">
+      <DataView v-else :value="filteredEvents" :layout="layout" paginator :rows="8" dataKey="id">
         <template #header>
           <div class="flex justify-content-between gap-4">
             <EventSearchComponent @update-search="updateSearch" @update-continent="updateCategory" />

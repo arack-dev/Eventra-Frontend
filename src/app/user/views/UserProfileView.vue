@@ -36,7 +36,7 @@ const saveProfile = async () => {
       firstName: user.value.firstName,
       lastName: user.value.lastName,
       email: user.value.email,
-      password: passwordStore,
+      password: passwordStore || '',
       typeId: user.value.typeOfUser.typeId,
       url: "https://depauliaonline.com/wp-content/uploads/2021/09/IMG_5087-1-600x900.jpg"
     })
