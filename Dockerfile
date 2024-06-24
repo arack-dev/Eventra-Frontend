@@ -1,5 +1,5 @@
 # Usa una imagen base de Node.js para construir la aplicación
-FROM node:14 as build-stage
+FROM node:20 as build-stage
 
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
@@ -23,7 +23,7 @@ FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 # Copia el archivo de configuración de Nginx personalizado (opcional)
-COPY nginx.conf /etc/nginx/nginx.conf
+# COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expone el puerto 80 para acceder a la aplicación
 EXPOSE 80
