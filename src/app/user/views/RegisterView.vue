@@ -26,14 +26,16 @@ const register = async () => {
         email: email.value,
         password: password.value,
         typeId: 1,
+        url: "string"
       });
-      authStore.login(email.value, password.value)
+      authStore.login(email.value, password.value);
       toast.add({
         severity: 'success',
         summary: 'Registration Successful',
         detail: 'You have registered successfully. Welcome!',
         life: 3000
       });
+      router.push('/'); // Redirige al usuario a la página principal
     } catch (error) {
       toast.add({
         severity: 'error',
@@ -46,7 +48,7 @@ const register = async () => {
     toast.add({
       severity: 'warn',
       summary: 'Validation Error',
-      detail: 'Both email and password fields are required. Please fill them out and try again.',
+      detail: 'All fields are required. Please fill them out and try again.',
       life: 3000
     });
   }

@@ -1,5 +1,6 @@
 import { ApiBaseService } from '@/app/shared/services/ApiBaseService'
 
+
 interface AuthResponse {
   token: string;
 }
@@ -9,16 +10,27 @@ class AuthService extends ApiBaseService<any> {
     super('/auth')
   }
 
+  clearSession() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('password');
+  }
+
   async register(user: {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
     typeId: number;
+    url: string;
   }) {
     try {
+      this.clearSession();
       const response = await this.http.post<AuthResponse>(`${this.resourcePath()}/register`, user);
-      localStorage.setItem('token', response.data.token);
+      // localStorage.setItem('token', response.data.token);
       return response.data;
     } catch (error) {
       console.error('Error registering user:', error);
@@ -30,8 +42,9 @@ class AuthService extends ApiBaseService<any> {
     password: string
   }) {
     try {
+      this.clearSession();
       const response = await this.http.post<AuthResponse>(`${this.resourcePath()}/login`, credentials);
-      localStorage.setItem('token', response.data.token);
+      // localStorage.setItem('token', response.data.token);
       return response.data;
     } catch (error) {
       console.error('Error logging in:', error);

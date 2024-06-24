@@ -8,8 +8,9 @@ const bannerImage = ref('https://wallpaperboat.com/wp-content/uploads/2021/04/23
 const isEditing = ref(false);
 const user = ref(new UserModel())
 const loading = ref(false)
-const emailLocal = localStorage.getItem('email')
+const emailLocal = ref(localStorage.getItem('email') || sessionStorage.getItem('email'))
 
+/* 
 onMounted(async () => {
 
   try {
@@ -23,6 +24,25 @@ onMounted(async () => {
     loading.value = false
   }
 })
+*/
+
+onMounted(async () => {
+  if (emailLocal.value) {
+    try {
+      loading.value = true;
+      const response = await UserService.getEmail(emailLocal.value)
+      user.value = response.data
+      user.value.url = 'https://www.fichajes.com/build/images/player-covers/lionel-messi.2183aef8.jpg'
+    } catch (error) {
+      console.error('User Service Error:', error)
+    } finally {
+      loading.value = false
+    }
+  } else {
+    console.error('No email found in localStorage or sessionStorage');
+  }
+})
+
 
 const startEditing = () => {
   isEditing.value = true;
