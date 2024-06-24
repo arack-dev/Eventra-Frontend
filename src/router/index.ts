@@ -38,12 +38,30 @@ const index = createRouter({
       path: '/profile',
       name: 'profile',
       component: () => import('@/app/user/views/UserProfileView.vue'),
-      meta: { requiresAuth: true }
+      // meta: { requiresAuth: true }
     },
     {
       path: '/post',
       name: 'post',
       component: () => import('@/app/user/views/PostView.vue'),
+      //meta: { requiresAuth: true }
+    },
+    {
+      path: '/my-events',
+      name: 'my-events',
+      component: () => import('@/app/user/views/MyEventsView.vue'),
+      //meta: { requiresAuth: true }
+    },
+    {
+      path: '/create-tickets',
+      name: 'create-tickets',
+      component: () => import('@/app/user/views/CreateTicketsView.vue'),
+      //meta: { requiresAuth: true }
+    },
+    {
+      path: '/create-reservations',
+      name: 'create-reservations',
+      component: () => import('@/app/user/views/CreateReservationsView.vue'),
       //meta: { requiresAuth: true }
     },
   ]
@@ -54,7 +72,7 @@ index.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const token = localStorage.getItem('token');
 
-  if (requiresAuth && !token) {
+  if (requiresAuth /*&& !token*/) {  
     next('/');
   } else {
     next();

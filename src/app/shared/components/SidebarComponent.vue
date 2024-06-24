@@ -50,6 +50,23 @@ watch(() => authStore.isLoggedIn, () => {
         <span class="link-text font-medium">Publicar en Eventra</span>
         <i class="pi pi-arrow-right"></i>
       </router-link>
+
+      <!-- New Links -->
+      <router-link to="/my-events" class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+        <i class="pi pi-calendar"></i>
+        <span class="link-text font-medium ml-2">Mis Eventos</span>
+      </router-link>
+
+      <router-link to="/create-tickets" class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+        <i class="pi pi-ticket"></i>
+        <span class="link-text font-medium ml-2">Crear Tickets</span>
+      </router-link>
+
+      <router-link to="/create-reservations" class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+        <i class="pi pi-book"></i>
+        <span class="link-text font-medium ml-2">Crear Reservaciones</span>
+      </router-link>
+
     </div>
 
     <div class="mt-auto auth-actions" v-if="!authStore.isLoggedIn">
